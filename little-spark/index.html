@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <link rel="stylesheet" href="assets/fonts/lxgwwenkai-regular.css" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px; height: 1080px; overflow: hidden;
+        background: #f1e4c6;
+        font-family: "LXGW WenKai", serif;
+      }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+      .layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      .abs { position: absolute; left: 0; top: 0; }
+
+      #sky-day { background: linear-gradient(#f3e6c8, #ead6ae); }
+      #sky-dusk { background: linear-gradient(#e7a678, #f1cf9b); opacity: 0; }
+      #sky-night { background: linear-gradient(#1c2444, #3a4370); opacity: 0; }
+
+      #far { width: 2880px; }
+      #world { width: 3840px; }
+      #night-tint { width: 3840px; height: 1080px; background: #1a2143; opacity: 0; }
+
+      .glow {
+        position: absolute; left: -290px; top: -290px; width: 820px; height: 820px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 214, 140, 0.85) 0%, rgba(255, 180, 100, 0.35) 30%, rgba(255, 160, 90, 0) 65%);
+        mix-blend-mode: screen; opacity: 0;
+      }
+
+      .cap {
+        position: absolute; left: 130px; top: 96px;
+        font-size: 52px; line-height: 1.6; color: #4a3625; opacity: 0;
+        letter-spacing: 0.04em;
+      }
+      .cap .q { color: #9a4a2e; }
+
+      #title-card, #end-card {
+        background: #f3e8cf; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; color: #4a3625;
+      }
+      #end-card { opacity: 0; }
+      .t-big { font-size: 190px; letter-spacing: 0.12em; line-height: 1.1; }
+      .t-sub { font-size: 50px; margin-top: 18px; color: #7a5a40; letter-spacing: 0.08em; }
+      .t-small { font-size: 30px; margin-top: 60px; color: #86654c; letter-spacing: 0.1em; }
+      #title-spark { width: 260px; height: 260px; margin-bottom: 20px; }
+
+      #grain { mix-blend-mode: multiply; opacity: 0.22; pointer-events: none; }
+      #vignette {
+        background: radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(60, 35, 15, 0.28) 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="72" data-width="1920" data-height="1080">
+      <!-- shared SVG defs -->
+      <svg width="0" height="0" style="position:absolute">
+        <defs>
+          <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="5" />
+          </filter>
+        </defs>
+      </svg>
+
+      <!-- sky -->
+      <div id="sky-day" class="layer"></div>
+      <div id="sky-dusk" class="layer"></div>
+      <div id="sky-night" class="layer"></div>
+
+      <!-- stars + moon + sun (screen-fixed, far away) -->
+      <svg id="stars" class="layer" viewBox="0 0 1920 1080"></svg>
+      <svg id="moon" class="abs" width="180" height="180" viewBox="0 0 180 180" style="left:1560px;top:90px;opacity:0">
+        <circle cx="90" cy="90" r="80" fill="rgba(255,236,180,0.18)" />
+        <path d="M110 30 A62 62 0 1 0 150 120 A50 50 0 1 1 110 30 Z" fill="#f6e3a6" filter="url(#rough)" />
+      </svg>
+      <svg id="sun" class="abs" width="260" height="260" viewBox="0 0 260 260" style="left:1470px;top:60px">
+        <circle cx="130" cy="130" r="112" fill="#f5cf6a" opacity="0.35" />
+        <circle cx="130" cy="130" r="86" fill="#efb840" filter="url(#rough)" />
+        <circle cx="130" cy="130" r="70" fill="#f6ca58" />
+      </svg>
+
+      <!-- far hills (parallax 0.5x) -->
+      <svg id="far" class="abs" height="1080" viewBox="0 0 2880 1080">
+        <path d="M0 700 C 240 610 480 640 720 670 S 1200 600 1440 650 S 1920 700 2160 640 S 2640 620 2880 660 L2880 1080 L0 1080 Z" fill="#c2b377" filter="url(#rough)" />
+        <path d="M0 760 C 300 700 520 720 820 740 S 1400 690 1700 730 S 2300 760 2600 720 L2880 730 L2880 1080 L0 1080 Z" fill="#aea463" filter="url(#rough)" />
+      </svg>
+
+      <!-- world (2 screens wide, pans) -->
+      <div id="world" class="abs" style="height:1080px">
+        <svg class="abs" width="3840" height="1080" viewBox="0 0 3840 1080">
+          <g filter="url(#rough)">
+            <!-- autumn trees on the slope side -->
+            <rect x="2455" y="560" width="26" height="260" fill="#6e4a33" />
+            <circle cx="2468" cy="540" r="120" fill="#d9893f" />
+            <circle cx="2400" cy="600" r="70" fill="#cf7a36" />
+            <rect x="3565" y="600" width="22" height="300" fill="#6e4a33" />
+            <circle cx="3576" cy="590" r="105" fill="#c9683a" />
+            <!-- ground -->
+            <path d="M0 800 L2200 800 C 2600 800 2700 900 3000 900 L3840 900 L3840 1080 L0 1080 Z" fill="#b98555" />
+            <path d="M0 800 L2200 800 C 2600 800 2700 900 3000 900 L3840 900" fill="none" stroke="#8f9a44" stroke-width="18" />
+            <!-- stream -->
+            <path d="M2950 1080 C 3050 990 3200 965 3400 968 S 3700 975 3840 960 L3840 1080 Z" fill="#8fb3b8" />
+            <path d="M3150 1010 q 40 -12 80 0 M3380 1030 q 50 -14 100 0 M3620 1005 q 40 -12 80 0" stroke="#d3e6e8" stroke-width="6" fill="none" stroke-linecap="round" />
+            <!-- burrow -->
+            <path d="M110 805 A110 110 0 0 1 330 805 Z" fill="#5a3a26" />
+            <path d="M135 805 A85 85 0 0 1 305 805 Z" fill="#2e1d14" />
+            <!-- stone -->
+            <ellipse cx="1000" cy="775" rx="180" ry="98" fill="#a19e98" />
+            <path d="M880 735 Q 930 690 1010 688" stroke="#cfccc4" stroke-width="14" fill="none" stroke-linecap="round" />
+            <!-- bush with berries -->
+            <circle cx="1640" cy="790" r="70" fill="#6f8a3e" />
+            <circle cx="1720" cy="770" r="85" fill="#7b9745" />
+            <circle cx="1800" cy="795" r="60" fill="#6f8a3e" />
+            <g fill="#c9453a">
+              <circle cx="1680" cy="740" r="9" /><circle cx="1720" cy="720" r="9" /><circle cx="1760" cy="755" r="9" />
+              <circle cx="1650" cy="785" r="9" /><circle cx="1800" cy="780" r="9" /><circle cx="1740" cy="790" r="9" />
+            </g>
+            <!-- pebbles -->
+            <g fill="#9b6a41">
+              <ellipse cx="500" cy="900" rx="26" ry="9" /><ellipse cx="1300" cy="960" rx="30" ry="10" />
+              <ellipse cx="2000" cy="880" rx="22" ry="8" /><ellipse cx="2750" cy="990" rx="28" ry="9" />
+              <ellipse cx="820" cy="1010" rx="24" ry="8" />
+            </g>
+            <!-- grass tufts -->
+            <g stroke="#6f7f3a" stroke-width="7" fill="none" stroke-linecap="round">
+              <path d="M420 800 l-10 -50 M432 800 l6 -62 M444 800 l14 -40" />
+              <path d="M1420 800 l-8 -44 M1432 800 l4 -56" />
+              <path d="M2280 806 l-8 -46 M2292 806 l6 -58" />
+              <path d="M3060 900 l-10 -50 M3072 900 l6 -62" />
+            </g>
+            <!-- little yellow flower -->
+            <path d="M1460 800 L1460 745" stroke="#6f7f3a" stroke-width="5" />
+            <g fill="#f0c24a"><circle cx="1450" cy="738" r="8" /><circle cx="1470" cy="738" r="8" /><circle cx="1460" cy="728" r="8" /><circle cx="1460" cy="748" r="8" /></g>
+            <circle cx="1460" cy="738" r="5" fill="#c9683a" />
+          </g>
+        </svg>
+
+        <!-- hedgehog -->
+        <div id="hog" class="abs" style="width:200px;height:150px;opacity:0">
+          <div id="hog-walk" style="width:200px;height:150px">
+            <div id="hog-face-dir" data-layout-allow-overflow style="width:200px;height:150px">
+              <svg width="200" height="150" viewBox="0 0 200 150">
+                <g filter="url(#rough)">
+                  <path id="hog-spikes" fill="#6e4a33" />
+                  <ellipse cx="92" cy="98" rx="78" ry="46" fill="#8c6242" />
+                  <ellipse cx="60" cy="140" rx="14" ry="7" fill="#5a3a26" />
+                  <ellipse cx="122" cy="140" rx="14" ry="7" fill="#5a3a26" />
+                  <path d="M120 72 C 150 64 176 84 194 100 C 178 118 146 128 122 120 Z" fill="#ecd2a8" />
+                  <circle cx="136" cy="70" r="10" fill="#ecd2a8" />
+                </g>
+                <circle cx="193" cy="100" r="7" fill="#3b2418" />
+                <g id="hog-eye"><circle cx="158" cy="90" r="6" fill="#3b2418" /><circle cx="160" cy="88" r="2" fill="#fff" /></g>
+                <ellipse cx="160" cy="108" rx="9" ry="6" fill="#f2a58e" opacity="0.8" />
+                <path id="hog-tear" d="M152 98 q -6 10 0 14 q 6 -4 0 -14 Z" fill="#8fc3e0" opacity="0" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- apple -->
+        <div id="apple" class="abs" style="width:70px;height:70px">
+          <svg width="70" height="70" viewBox="0 0 70 70">
+            <g filter="url(#rough)">
+              <circle cx="35" cy="42" r="26" fill="#d8453a" />
+              <path d="M35 18 q 2 -10 8 -14" stroke="#5a3a26" stroke-width="4" fill="none" stroke-linecap="round" />
+              <path d="M40 14 q 14 -8 22 2 q -12 8 -22 -2 Z" fill="#7a9a45" />
+            </g>
+            <path d="M22 34 q 4 -8 12 -9" stroke="#f08a78" stroke-width="5" fill="none" stroke-linecap="round" />
+          </svg>
+        </div>
+
+        <!-- grass in front of the apple -->
+        <svg class="abs" width="3840" height="1080" viewBox="0 0 3840 1080" style="pointer-events:none">
+          <g stroke="#7b8c3c" stroke-width="9" fill="none" stroke-linecap="round" filter="url(#rough)">
+            <path d="M3285 906 l-14 -58 M3300 906 l-2 -70 M3316 906 l10 -60 M3332 906 l20 -48 M3348 906 l4 -64 M3362 906 l18 -56 M3376 906 l-4 -46" />
+          </g>
+        </svg>
+
+        <div id="night-tint" class="abs"></div>
+
+        <!-- Claude, the little spark -->
+        <div id="claude" class="abs" style="width:240px;height:240px">
+          <div class="glow" id="glow" data-layout-allow-overflow></div>
+          <div id="claude-bob" style="width:240px;height:240px">
+            <svg id="claude-svg" width="240" height="240" viewBox="-120 -120 240 240"></svg>
+          </div>
+        </div>
+
+        <!-- zzz above the burrow -->
+        <div id="zzz" class="abs" style="left:240px;top:650px;font-size:60px;color:#f3e9d2">
+          <span class="z abs" style="opacity:0">z</span>
+          <span class="z abs" style="opacity:0">z</span>
+          <span class="z abs" style="opacity:0">z</span>
+        </div>
+      </div>
+
+      <!-- falling leaves (screen layer) -->
+      <div id="leaves" class="layer" style="pointer-events:none"></div>
+
+      <!-- captions -->
+      <div class="cap" id="c1">秋天的山坡上，住着一颗小小的光。<br />大家叫它 Claude。</div>
+      <div class="cap" id="c2">它个子很小，也不会唱歌，<br />可是，它很会听。</div>
+      <div class="cap" id="c3">一天，小刺猬跑来，眼泪汪汪：<br /><span class="q">“我的苹果滚丢了！”</span></div>
+      <div class="cap" id="c4">Claude 没有急着回答。<br />它轻轻地问：<span class="q">“它是从哪里滚走的呀？”</span></div>
+      <div class="cap" id="c5"><span class="q">“从坡上。”</span>小刺猬指了指。<br /><span class="q">“那它一定往低处去了。”</span></div>
+      <div class="cap" id="c6">他们顺着山坡，<br />一步一步往下找……</div>
+      <div class="cap" id="c7">小溪边的草丛里，<br />红红的苹果正在等他们。</div>
+      <div class="cap" id="c8">天黑了。<br />小刺猬有一点点害怕。</div>
+      <div class="cap" id="c9">Claude 轻轻亮了起来：<br /><span class="q">“我不大，但够照亮回家的路。”</span></div>
+      <div class="cap" id="c10">那天晚上，<br />小刺猬睡得很香很香。</div>
+      <div class="cap" id="c11">Claude 望着星星想：<br />原来，陪着别人，是一件暖暖的事。</div>
+
+      <!-- title & end cards -->
+      <div id="title-card" class="layer">
+        <svg id="title-spark" viewBox="-120 -120 240 240"></svg>
+        <div class="t-big">小光</div>
+        <div class="t-sub">一个关于 Claude 的睡前故事</div>
+      </div>
+      <div id="end-card" class="layer">
+        <div class="t-big" style="font-size:150px">晚安。</div>
+        <div class="t-sub">— 完 —</div>
+        <div class="t-small">made with Claude × HyperFrames</div>
+      </div>
+
+      <svg id="grain" class="layer" viewBox="0 0 1920 1080">
+        <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="11" /><feColorMatrix type="saturate" values="0" /></filter>
+        <rect width="1920" height="1080" filter="url(#paper)" />
+      </svg>
+      <div id="vignette" class="layer"></div>
+
+      <audio id="bgm" src="assets/lullaby.m4a" data-start="0" data-duration="72" data-volume="0.9" data-fade-out="2"></audio>
+    </div>
+
+    <script>
+      // ---------- build the spark (Claude) ----------
+      function sparkMarkup(prefix) {
+        const lens = [100, 84, 97, 80, 104, 88, 82, 99, 86, 95, 80, 101];
+        const jitter = [0, 5, -3, 2, -5, 3, 1, -2, 4, -4, 2, -1];
+        let rays = "";
+        for (let i = 0; i < 12; i++) {
+          const a = ((i * 30 + jitter[i] - 90) * Math.PI) / 180;
+          const L = lens[i] * 0.95, w = 14, tip = 7, r0 = 24;
+          const cx = Math.cos(a), cy = Math.sin(a), px = -cy, py = cx;
+          const b1 = [r0 * cx + w * px, r0 * cy + w * py], b2 = [r0 * cx - w * px, r0 * cy - w * py];
+          const t1 = [L * cx + tip * px, L * cy + tip * py], t2 = [L * cx - tip * px, L * cy - tip * py];
+          rays += `<path d="M${b1} L${t1} A${tip} ${tip} 0 0 0 ${t2} L${b2} Z"/>`;
+        }
+        return `
+          <g filter="url(#rough)" fill="#D97757">${rays}<circle r="46"/></g>
+          <ellipse cx="-26" cy="14" rx="11" ry="7" fill="#f2a58e" opacity="0.85"/>
+          <ellipse cx="26" cy="14" rx="11" ry="7" fill="#f2a58e" opacity="0.85"/>
+          <g id="${prefix}-eyes-open">
+            <ellipse class="eye" cx="-15" cy="-4" rx="5.5" ry="7.5" fill="#3b2418"/>
+            <ellipse class="eye" cx="15" cy="-4" rx="5.5" ry="7.5" fill="#3b2418"/>
+            <circle cx="-13" cy="-7" r="2" fill="#fff"/><circle cx="17" cy="-7" r="2" fill="#fff"/>
+          </g>
+          <g id="${prefix}-eyes-closed" opacity="0" stroke="#3b2418" stroke-width="4" fill="none" stroke-linecap="round">
+            <path d="M-22 -3 q 7 7 14 0"/><path d="M8 -3 q 7 7 14 0"/>
+          </g>
+          <path d="M-8 12 q 8 8 16 0" stroke="#3b2418" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+      }
+      document.getElementById("claude-svg").innerHTML = sparkMarkup("cl");
+      document.getElementById("title-spark").innerHTML = sparkMarkup("tt");
+
+      // ---------- hedgehog spikes ----------
+      (function () {
+        const cx = 92, cy = 98, rx = 78, ry = 46;
+        let d = "";
+        const n = 13;
+        for (let i = 0; i < n; i++) {
+          const a0 = Math.PI * (1.02 + (0.62 * i) / n), a1 = Math.PI * (1.02 + (0.62 * (i + 1)) / n);
+          const am = (a0 + a1) / 2;
+          const p0 = [cx + rx * Math.cos(a0), cy + ry * Math.sin(a0)];
+          const p1 = [cx + rx * Math.cos(a1), cy + ry * Math.sin(a1)];
+          const t = [cx + rx * 1.32 * Math.cos(am) - 10, cy + ry * 1.45 * Math.sin(am)];
+          d += `M${p0} L${t} L${p1} Z `;
+        }
+        // back half spikes over the rump
+        d += `M20 110 L-4 96 L22 88 Z M18 88 L-2 70 L28 70 Z`;
+        document.getElementById("hog-spikes").setAttribute("d", d);
+      })();
+
+      // ---------- stars ----------
+      const STARS = [[120,80],[260,210],[410,120],[560,300],[700,70],[840,190],[990,110],[1110,260],[1240,60],[1380,170],[1500,300],[1720,260],[1820,90],[330,380],[640,420],[920,360],[1180,400],[1460,420],[1780,380],[80,300],[1050,40],[760,280]];
+      document.getElementById("stars").innerHTML = STARS.map(([x, y], i) => {
+        const r = 2.2 + (i % 3) * 1.2;
+        return `<g class="star" opacity="0" transform="translate(${x} ${y})"><circle r="${r * 2.6}" fill="rgba(255,236,170,0.18)"/><circle r="${r}" fill="#fff4c9"/></g>`;
+      }).join("");
+
+      // ---------- leaves ----------
+      const LEAF_COLORS = ["#d9893f", "#c9453a", "#e0a13d", "#c9683a", "#b8542f", "#e3b04b", "#d06a35"];
+      document.getElementById("leaves").innerHTML = LEAF_COLORS.map((c) =>
+        `<svg class="leaf abs" width="44" height="30" viewBox="0 0 44 30"><path d="M2 15 Q 18 -4 42 15 Q 18 34 2 15 Z" fill="${c}"/><path d="M4 15 L38 15" stroke="rgba(0,0,0,0.18)" stroke-width="2"/></svg>`
+      ).join("");
+
+      // ---------- timeline ----------
+      const tl = gsap.timeline({ paused: true });
+      const G = (sel) => document.querySelector(sel);
+
+      // world positions (top-left of each element)
+      const STONE = { x: 1000 - 120, y: 598 - 120 };
+      gsap.set("#claude", { x: STONE.x, y: STONE.y });
+      gsap.set("#hog", { x: 160, y: 655 });
+      gsap.set("#apple", { x: 3300, y: 832 });
+      gsap.set("#world", { x: 0 });
+      gsap.set("#far", { x: 0 });
+      gsap.set(".z", { x: (i) => i * 34, y: 0 });
+
+      // continuous gentle floating of Claude + title spark
+      tl.to("#claude-bob", { y: -12, duration: 1.6, ease: "sine.inOut", yoyo: true, repeat: 43 }, 0);
+      tl.to("#title-spark", { y: -14, rotation: 4, duration: 1.4, ease: "sine.inOut", yoyo: true, repeat: 5 }, 0);
+
+      // blinks
+      const blink = (id, t) => {
+        tl.to(`#${id} .eye`, { scaleY: 0.1, transformOrigin: "50% 50%", duration: 0.08 }, t);
+        tl.to(`#${id} .eye`, { scaleY: 1, duration: 0.1 }, t + 0.12);
+      };
+      [1.8, 4.4].forEach((t) => blink("tt-eyes-open", t));
+      [9.2, 14.6, 20.4, 24.5, 30.2, 35.0, 41.8, 45.2, 50.1, 55.3, 60.3].forEach((t) => blink("cl-eyes-open", t));
+
+      // falling leaves during daytime
+      gsap.utils.toArray(".leaf").forEach((leaf, i) => {
+        const x0 = 220 + i * 250, dur = 7.5 + (i % 3) * 0.8;
+        tl.fromTo(leaf, { x: x0, y: -60, rotation: i * 40 },
+          { x: x0 - 260, y: 1120, rotation: i * 40 + 520, duration: dur, ease: "none", repeat: Math.floor((44 - i * 0.9) / dur) - 1 }, i * 0.9);
+      });
+
+      // ---- S1: title (0–7)
+      tl.to("#title-card", { opacity: 0, duration: 1.2, ease: "power1.inOut" }, 6);
+
+      // captions helper
+      const cap = (id, a, b) => {
+        tl.fromTo(id, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, a);
+        tl.to(id, { opacity: 0, y: -8, duration: 0.6, ease: "power1.in" }, b - 0.6);
+      };
+
+      // ---- S2: introduce Claude (7–16)
+      cap("#c1", 7.4, 11.8);
+      cap("#c2", 12.0, 16.0);
+      tl.to("#claude-bob", { scale: 1.08, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, 13.8);
+
+      // ---- S3: hedgehog arrives (16–26)
+      tl.to("#hog", { opacity: 1, duration: 0.5 }, 16);
+      tl.to("#hog", { x: 590, duration: 2.6, ease: "power1.out" }, 16.3);
+      tl.to("#hog-walk", { y: -9, duration: 0.16, yoyo: true, repeat: 13, ease: "sine.inOut" }, 16.3);
+      cap("#c3", 17.0, 21.6);
+      tl.to("#hog-tear", { opacity: 1, duration: 0.3 }, 19.2);
+      tl.fromTo("#hog-tear", { y: 0 }, { y: 18, duration: 1.2, repeat: 2, ease: "power1.in" }, 19.2);
+      tl.to("#hog-tear", { opacity: 0, duration: 0.3 }, 22.6);
+      cap("#c4", 21.8, 26.2);
+      tl.to("#claude-bob", { rotation: -10, duration: 0.8, ease: "sine.inOut" }, 22.2);
+      tl.to("#claude-bob", { rotation: 0, duration: 0.8, ease: "sine.inOut" }, 25.2);
+
+      // ---- S4: journey down the slope (26–38)
+      cap("#c5", 26.4, 31.4);
+      tl.to("#hog-face-dir", { rotation: -8, duration: 0.3, yoyo: true, repeat: 1 }, 27.0);
+      tl.to("#world", { x: -1920, duration: 9.5, ease: "power1.inOut" }, 27.6);
+      tl.to("#far", { x: -960, duration: 9.5, ease: "power1.inOut" }, 27.6);
+      tl.to("#hog", { x: 2100, duration: 6.0, ease: "none" }, 27.8);
+      tl.to("#hog", { x: 2880, y: 755, duration: 3.0, ease: "power1.out" }, 33.8);
+      tl.to("#hog-walk", { y: -9, duration: 0.16, yoyo: true, repeat: 55, ease: "sine.inOut" }, 27.8);
+      tl.to("#claude", { x: 3130 - 120, duration: 9.6, ease: "power1.inOut" }, 27.6);
+      tl.to("#claude", { y: 470, duration: 2.0, ease: "sine.out" }, 27.6);
+      tl.to("#claude", { y: 700 - 120, duration: 4.0, ease: "sine.inOut" }, 33.2);
+      cap("#c6", 31.8, 37.6);
+
+      // ---- S5: the apple (38–46)
+      tl.to("#apple", { x: 3190, y: 832, rotation: -300, duration: 1.4, ease: "power2.out" }, 38.2);
+      cap("#c7", 38.6, 45.8);
+      tl.to("#hog", { y: 700, duration: 0.3, yoyo: true, repeat: 3, ease: "power1.out" }, 40.0);
+      tl.to("#claude-bob", { scale: 1.12, duration: 0.3, yoyo: true, repeat: 3, ease: "sine.inOut" }, 40.0);
+      // apple hops onto the hedgehog's spikes
+      tl.to("#apple", { x: 2880 + 65, duration: 1.1, ease: "power1.inOut" }, 42.4);
+      tl.to("#apple", { y: 640, duration: 0.55, ease: "power2.out" }, 42.4);
+      tl.to("#apple", { y: 735, rotation: -360, duration: 0.55, ease: "power2.in" }, 42.95);
+
+      // ---- S6: night falls, Claude lights the way (46–57.5)
+      tl.to("#sun", { y: 420, opacity: 0, duration: 3.5, ease: "power1.in" }, 45.6);
+      tl.to("#sky-dusk", { opacity: 1, duration: 2.0 }, 45.6);
+      tl.to("#sky-night", { opacity: 1, duration: 2.5 }, 47.2);
+      tl.to("#night-tint", { opacity: 0.55, duration: 3.5 }, 46.2);
+      tl.to("#far", { filter: "brightness(0.45) saturate(0.7)", duration: 3.5 }, 46.2);
+      tl.to("#moon", { opacity: 1, duration: 2 }, 48.4);
+      gsap.utils.toArray(".star").forEach((s, i) => {
+        tl.to(s, { opacity: 1, duration: 0.8 }, 48.5 + (i % 7) * 0.25);
+        tl.to(s, { opacity: 0.35, duration: 1.1 + (i % 4) * 0.3, yoyo: true, repeat: 7, ease: "sine.inOut" }, 50 + (i % 5) * 0.4);
+      });
+      tl.to(".cap", { color: "#f3e9d2", duration: 1.5 }, 46.0);
+      tl.to(".cap .q", { color: "#ffc9a3", duration: 1.5 }, 46.0);
+      cap("#c8", 46.6, 51.0);
+      tl.to("#hog", { x: 2850, duration: 0.5, yoyo: true, repeat: 3, ease: "sine.inOut" }, 48.2);
+      tl.to("#apple", { x: 2850 + 65, duration: 0.5, yoyo: true, repeat: 3, ease: "sine.inOut" }, 48.2);
+      cap("#c9", 51.2, 57.0);
+      tl.to("#glow", { opacity: 1, scale: 1.05, duration: 1.4, ease: "power2.out" }, 51.6);
+      tl.to("#claude-bob", { scale: 1.1, duration: 1.0, yoyo: true, repeat: 1, ease: "sine.inOut" }, 51.6);
+      // walk home
+      tl.set("#hog-face-dir", { scaleX: -1, transformOrigin: "50% 50%" }, 52.6);
+      tl.to("#world", { x: 0, duration: 5.2, ease: "power1.inOut" }, 52.8);
+      tl.to("#far", { x: 0, duration: 5.2, ease: "power1.inOut" }, 52.8);
+      tl.to(["#hog"], { x: 2100, y: 655, duration: 1.6, ease: "none" }, 52.8);
+      tl.to(["#apple"], { x: 2100 + 65, y: 635, duration: 1.6, ease: "none" }, 52.8);
+      tl.to("#hog", { x: 160, duration: 3.8, ease: "power1.out" }, 54.4);
+      tl.to("#apple", { x: 160 + 65, duration: 3.8, ease: "power1.out" }, 54.4);
+      tl.to("#hog-walk", { y: -9, duration: 0.16, yoyo: true, repeat: 33, ease: "sine.inOut" }, 52.8);
+      tl.to("#claude", { x: STONE.x, duration: 5.4, ease: "power1.inOut" }, 52.8);
+      tl.to("#claude", { y: 520, duration: 2.0, ease: "sine.out" }, 52.8);
+      tl.to("#claude", { y: STONE.y, duration: 2.6, ease: "sine.inOut" }, 55.6);
+
+      // ---- S7: goodnight (57.5–66.5)
+      tl.to(["#hog", "#apple"], { opacity: 0, duration: 0.8 }, 58.0);
+      tl.to("#glow", { opacity: 0.7, duration: 2 }, 58.2);
+      cap("#c10", 58.2, 62.0);
+      gsap.utils.toArray(".z").forEach((z, i) => {
+        tl.fromTo(z, { opacity: 0, y: 0, x: i * 34 }, { opacity: 1, y: -60, x: i * 34 + 24, duration: 1.2, ease: "sine.out", repeat: 3, repeatDelay: 0.8 }, 59 + i * 0.6);
+      });
+      tl.to(".z", { opacity: 0, duration: 0.6 }, 65.6);
+      cap("#c11", 62.2, 66.6);
+      tl.to("#claude-bob", { rotation: -12, duration: 1.2, ease: "sine.inOut" }, 62.4);
+      tl.to("#cl-eyes-open", { opacity: 0, duration: 0.3 }, 64.6);
+      tl.to("#cl-eyes-closed", { opacity: 1, duration: 0.3 }, 64.6);
+      tl.to("#claude-bob", { rotation: 0, duration: 1.4, ease: "sine.inOut" }, 64.6);
+
+      // ---- S8: end card (66.5–72)
+      tl.to("#end-card", { opacity: 1, duration: 1.4, ease: "power1.inOut" }, 66.6);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
