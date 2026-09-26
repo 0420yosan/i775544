@@ -1,0 +1,12 @@
+node_modules/
+__pycache__/
+snapshots/
+.hyperframes/
+
+# This repository is public. The comic's page photos and everything traced from
+# them (the page mask cache, sprites, renders) stay local until the comic's
+# owner decides to publish them. Rebuild them with the scripts in README.md.
+.cache/
+source/pages/
+assets/art/
+renders/
