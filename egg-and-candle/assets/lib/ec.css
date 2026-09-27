@@ -1,0 +1,38 @@
+/* Shared styles for every page composition. Each page root carries class "ec";
+   only descendants are styled here (page roots are styled by #id in their file). */
+.ec .set { position: absolute; inset: 0; overflow: hidden; }
+.ec .fade { position: absolute; inset: 0; }
+.ec .layer { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; }
+.ec .screen { position: absolute; inset: 0; }
+.ec .abs { position: absolute; }
+.ec .actor, .ec .bubble, .ec .label { position: absolute; }
+.ec .hopper, .ec .rig, .ec .breath { position: absolute; inset: 0; transform-origin: 50% 100%; }
+.ec .spr { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+.ec .part { position: absolute; display: block; }
+.ec .shadow {
+  position: absolute; left: 12%; right: 12%; bottom: -3%; height: 7%;
+  border-radius: 50%; background: radial-gradient(closest-side, rgba(92, 58, 30, 0.28), rgba(92, 58, 30, 0));
+}
+.ec .glow { position: absolute; border-radius: 50%; mix-blend-mode: screen; pointer-events: none; }
+.ec .label .card {
+  position: absolute; left: -26px; right: -26px; top: -16px; bottom: -16px;
+  background: #fffaf0; border: 4px solid #2b1d17; border-radius: 7px;
+  box-shadow: 0 10px 0 rgba(43, 29, 23, 0.1);
+}
+.ec .label .tape {
+  position: absolute; left: 50%; top: -34px; width: 150px; height: 40px; margin-left: -75px;
+  background: rgba(117, 186, 178, 0.62); border-left: 3px dashed rgba(255, 255, 255, 0.5); border-right: 3px dashed rgba(255, 255, 255, 0.5);
+}
+.ec .flake { position: absolute; border-radius: 50%; background: radial-gradient(circle, #ffffff 0%, #ffffff 45%, rgba(255, 255, 255, 0) 72%); }
+.ec .puff { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.7) 40%, rgba(255, 255, 255, 0) 70%); }
+.ec .drop { position: absolute; border-radius: 3px; background: linear-gradient(180deg, rgba(214, 229, 245, 0) 0%, rgba(214, 229, 245, 0.85) 100%); }
+.ec .splash { position: absolute; border-radius: 50%; border: 3px solid rgba(205, 222, 240, 0.8); border-top-color: rgba(205, 222, 240, 0); }
+.ec .sheet {
+  position: absolute; left: 0; top: 0; width: 1200px; height: 1600px; background: #fbf7ee;
+  box-shadow: 0 40px 90px rgba(70, 45, 20, 0.28), 0 6px 14px rgba(70, 45, 20, 0.16);
+}
+.ec .sheet > * { position: absolute; left: 0; top: 0; }
+.ec .blank { position: absolute; left: 0; top: 0; width: 1200px; height: 1600px; background: #fbf7ee; box-shadow: 0 40px 90px rgba(70, 45, 20, 0.28), 0 6px 14px rgba(70, 45, 20, 0.16); }
+.ec .bloom { --r: 0%; -webkit-mask-image: radial-gradient(circle at 50% 58%, #000 var(--r), rgba(0, 0, 0, 0) calc(var(--r) + 18%)); mask-image: radial-gradient(circle at 50% 58%, #000 var(--r), rgba(0, 0, 0, 0) calc(var(--r) + 18%)); }
+.ec .wipe { clip-path: inset(0 100% 0 0); }
+.ec .desk { position: absolute; inset: 0; background: #f3ead6; }

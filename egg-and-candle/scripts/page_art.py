@@ -22,7 +22,7 @@ U = ea.U
 def main():
     spec = json.loads(Path(sys.argv[1]).read_text())
     page = spec["page"]
-    mask = ea.page_ink(ea.ROOT / spec["image"], ea.ROOT / ".cache").copy()
+    mask = ea.page_ink(ea.ROOT / spec["image"], ea.ROOT / ".cache", spec.get("ink", "fwhm")).copy()
     keep = np.zeros_like(mask)
     cv2.fillPoly(keep, [np.array([[x * U, y * U] for x, y in spec["page_clip"]], np.int32)], 1)
     mask &= keep

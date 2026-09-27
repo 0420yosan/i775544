@@ -17,48 +17,13 @@
           background: #f3ead6;
           font-family: "Patrick Hand", cursive;
         }
-        #p1-root .set { position: absolute; inset: 0; overflow: hidden; }
-        #p1-root .fade { position: absolute; inset: 0; }
-        #p1-root .layer { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; }
-        #p1-root .screen { position: absolute; inset: 0; }
-        #p1-root .abs { position: absolute; }
-        #p1-root .actor, #p1-root .bubble, #p1-root .label { position: absolute; }
-        #p1-root .hopper, #p1-root .rig, #p1-root .breath { position: absolute; inset: 0; transform-origin: 50% 100%; }
-        #p1-root .spr { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
-        #p1-root .part { position: absolute; display: block; }
-        #p1-root .shadow {
-          position: absolute; left: 12%; right: 12%; bottom: -3%; height: 7%;
-          border-radius: 50%; background: radial-gradient(closest-side, rgba(92, 58, 30, 0.28), rgba(92, 58, 30, 0));
-        }
-        #p1-root .glow { position: absolute; border-radius: 50%; mix-blend-mode: screen; pointer-events: none; }
-        #p1-root .label .card {
-          position: absolute; left: -26px; right: -26px; top: -16px; bottom: -16px;
-          background: #fffaf0; border: 4px solid #2b1d17; border-radius: 7px;
-          box-shadow: 0 10px 0 rgba(43, 29, 23, 0.1);
-        }
-        #p1-root .label .tape {
-          position: absolute; left: 50%; top: -34px; width: 150px; height: 40px; margin-left: -75px;
-          background: rgba(117, 186, 178, 0.62); border-left: 3px dashed rgba(255, 255, 255, 0.5); border-right: 3px dashed rgba(255, 255, 255, 0.5);
-        }
-        #p1-root .flake { position: absolute; border-radius: 50%; background: radial-gradient(circle, #ffffff 0%, #ffffff 45%, rgba(255, 255, 255, 0) 72%); }
-        #p1-root .puff { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.7) 40%, rgba(255, 255, 255, 0) 70%); }
-        #p1-root .sheet {
-          position: absolute; left: 0; top: 0; width: 1200px; height: 1600px; background: #fbf7ee;
-          box-shadow: 0 40px 90px rgba(70, 45, 20, 0.28), 0 6px 14px rgba(70, 45, 20, 0.16);
-        }
-        #p1-root .sheet > * { position: absolute; left: 0; top: 0; }
-        #p1-root .bloom { --r: 0%; -webkit-mask-image: radial-gradient(circle at 50% 58%, #000 var(--r), rgba(0, 0, 0, 0) calc(var(--r) + 18%)); mask-image: radial-gradient(circle at 50% 58%, #000 var(--r), rgba(0, 0, 0, 0) calc(var(--r) + 18%)); }
-        #p1-root .wipe { clip-path: inset(0 100% 0 0); }
         #p1-root .amp { position: absolute; font-size: 150px; line-height: 1; color: #2b1d17; }
-        #p1-root .tbc { position: absolute; font-size: 104px; line-height: 1; color: #2b1d17; white-space: nowrap; letter-spacing: 0.01em; }
-        #p1-grain { position: absolute; inset: 0; background: url("assets/textures/paper-grain.png"); mix-blend-mode: multiply; opacity: 0.32; pointer-events: none; }
-        #p1-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 58%, rgba(70, 42, 18, 0.22) 100%); pointer-events: none; }
         #p1-warm-sky { position: absolute; inset: 0; background: linear-gradient(180deg, #ffeccd 0%, #fbdcae 60%, #f6cd98 100%); }
         #p1-winter-sky { position: absolute; inset: 0; background: linear-gradient(180deg, #cbdcec 0%, #dfe9f3 48%, #eef2f6 100%); }
         #p1-field-sky { position: absolute; inset: 0; background: linear-gradient(180deg, #a9d3f0 0%, #cfe7f7 45%, #eef7fc 100%); }
       </style>
 
-      <div id="p1-root" data-composition-id="page1" data-width="1920" data-height="1080" data-duration="57">
+      <div id="p1-root" class="ec" data-composition-id="page1" data-width="1920" data-height="1080" data-duration="55.8">
         <!-- title: "an egg & a candle" in the artist's own handwriting -->
         <div id="p1-title" class="set clip" data-start="0" data-duration="4.2" data-track-index="1">
           <div class="fade" id="p1-title-fade"></div>
@@ -112,18 +77,14 @@
         </div>
 
         <!-- the page again, now in color; camera pulls back -->
-        <div id="p1-pageout" class="set clip" data-start="50.6" data-duration="6.4" data-track-index="7">
+        <div id="p1-pageout" class="set clip" data-start="50.6" data-duration="5.2" data-track-index="7">
           <div class="fade" id="p1-pageout-fade">
             <div class="layer" id="p1-pageout-out" style="left: 960px; top: 540px">
               <div class="layer" id="p1-pageout-cam"></div>
             </div>
-            <div class="tbc wipe" id="p1-tbc" style="left: 1236px; top: 490px">to be continued…</div>
-            <div class="screen" id="p1-endfade" style="background: #f3ead6; opacity: 0"></div>
           </div>
         </div>
 
-        <div id="p1-grain"></div>
-        <div id="p1-vignette"></div>
       </div>
 
       <script>
@@ -157,210 +118,12 @@
           };
           const PANELS = { p1: [[102, 64], [619, 62], [619, 321], [102, 328]], p2: [[619, 62], [1145, 57], [1145, 300], [619, 321]], p3: [[102, 328], [1145, 300], [1145, 683], [92, 694]], p4: [[92, 694], [621, 694], [621, 1072], [86, 1076]], p5: [[621, 694], [1146, 683], [1149, 1073], [621, 1072]], p6: [[86, 1080], [1153, 1076], [1155, 1481], [72, 1480]] };
           const WASH = { p1: ["#fdeec4", "#f8dfa6"], p2: ["#fde3cf", "#f9cdb0"], p3: ["#dce9f4", "#eef3f8"], p4: ["#dde9f3", "#f1f5f9"], p5: ["#fde4d2", "#f7cdb2"], p6: ["#c9e4f6", "#f4f9fc"] };
-          const SRC = (id) => `assets/art/p1/${id}.svg`;
-          const INK = "#2b1d17";
-
-          const ROOT = document.getElementById("p1-root");
-          const $ = (id) => document.getElementById(id);
           const tl = gsap.timeline({ paused: true });
-
-          // seeded PRNG — deterministic "randomness" for particles and flicker
-          function rng(seed) {
-            let a = seed >>> 0;
-            return () => {
-              a = (a + 0x6d2b79f5) >>> 0;
-              let t = Math.imul(a ^ (a >>> 15), 1 | a);
-              t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-              return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-            };
-          }
-          function el(tag, cls, parent, css) {
-            const n = document.createElement(tag);
-            if (cls) n.className = cls;
-            if (css) n.style.cssText = css;
-            // light pools, backdrops and the page sheet overhang their parents on purpose
-            if (cls && /\b(glow|abs|sheet)\b/.test(cls)) n.setAttribute("data-layout-allow-overflow", "");
-            if (parent) parent.appendChild(n);
-            return n;
-          }
-          function img(src, cls, parent, css) {
-            const n = el("img", cls, parent, css);
-            n.src = src;
-            n.alt = "";
-            return n;
-          }
-
-          // ---------------------------------------------------------------- sprite builders
-          // an actor: position (bottom-centre anchor) > hopper (jumps) > rig (squash/lean) > breath (idle)
-          function actor(parent, id, art, k, x, y, opt = {}) {
-            const a = ART[art];
-            const [x0, y0, x1, y1] = a.b;
-            const W = (x1 - x0) * k, H = (y1 - y0) * k;
-            const root = el("div", "actor", parent, `left:${x - W / 2}px;top:${y - H}px;width:${W}px;height:${H}px`);
-            root.id = id;
-            if (opt.shadow !== false) el("div", "shadow", root);
-            const hopper = el("div", "hopper", root);
-            const rig = el("div", "rig", hopper);
-            const breath = el("div", "breath", rig);
-            const parts = {};
-            let glow = null;
-            if (a.p && a.p.flame) {
-              const [fx0, fy0, fx1, fy1] = a.p.flame.b;
-              const cx = ((fx0 + fx1) / 2 - x0) * k, cy = ((fy0 + fy1) / 2 - y0) * k, r = (opt.glow || 150) * (k / 2.5);
-              glow = el("div", "glow", breath, `left:${cx - r}px;top:${cy - r}px;width:${2 * r}px;height:${2 * r}px;background:radial-gradient(circle, rgba(255,214,120,0.95) 0%, rgba(255,170,80,0.45) 32%, rgba(255,150,70,0) 70%)`);
-            }
-            img(SRC(art), "spr", breath);
-            for (const [name, pa] of Object.entries(a.p || {})) {
-              const [px0, py0, px1, py1] = pa.b;
-              const pv = pa.pv || [(px0 + px1) / 2, py1];
-              const ox = (pv[0] - px0) * k, oy = (pv[1] - py0) * k;
-              const css = `left:${(px0 - x0) * k}px;top:${(py0 - y0) * k}px;width:${(px1 - px0) * k}px;height:${(py1 - py0) * k}px;transform-origin:${ox}px ${oy}px`;
-              if (name === "flame") {
-                // wrapper takes flares, inner image takes the constant flicker
-                const wrap = el("div", "part", breath, css);
-                parts.flame = img(SRC(`${art}--${name}`), "spr", wrap, `transform-origin:${ox}px ${oy}px`);
-                parts.flameWrap = wrap;
-              } else {
-                parts[name] = img(SRC(`${art}--${name}`), "part", breath, css);
-              }
-            }
-            return { root, hopper, rig, breath, parts, glow, W, H };
-          }
-          // a speech bubble or caption text placed by its top-left corner
-          function sprite(parent, cls, id, art, k, x, y) {
-            const [x0, y0, x1, y1] = ART[art].b;
-            const W = (x1 - x0) * k, H = (y1 - y0) * k;
-            const root = el("div", cls, parent, `left:${x}px;top:${y}px;width:${W}px;height:${H}px`);
-            root.id = id;
-            return { root, W, H };
-          }
-          function bubble(parent, id, art, k, x, y, origin) {
-            const b = sprite(parent, "bubble", id, art, k, x, y);
-            b.root.style.transformOrigin = origin || "20% 100%";
-            b.root.style.opacity = "0";
-            img(SRC(art), "spr", b.root);
-            return b.root;
-          }
-          function label(parent, id, art, k, x, y) {
-            const b = sprite(parent, "label", id, art, k, x, y);
-            b.root.style.opacity = "0";
-            el("div", "card", b.root);
-            img(SRC(art), "spr", b.root);
-            const tape = el("div", "tape", b.root);
-            return { root: b.root, tape };
-          }
-          const SVGNS = "http://www.w3.org/2000/svg";
-          function svg(parent, w, h, css, inner) {
-            const s = document.createElementNS(SVGNS, "svg");
-            s.setAttribute("width", w);
-            s.setAttribute("height", h);
-            s.setAttribute("viewBox", `0 0 ${w} ${h}`);
-            s.style.cssText = "position:absolute;overflow:visible;" + (css || "");
-            s.innerHTML = inner;
-            parent.appendChild(s);
-            return s;
-          }
-          const HEART = '<path d="M30 52 C 8 36 2 22 10 12 C 18 2 28 8 30 16 C 32 8 42 2 50 12 C 58 22 52 36 30 52 Z" fill="#ff7f96" stroke="#2b1d17" stroke-width="4" stroke-linejoin="round"/><path d="M16 17 q 3 -5 8 -4" stroke="#ffd0da" stroke-width="4" fill="none" stroke-linecap="round"/>';
-          const STAR = '<path d="M30 4 L36 24 L56 30 L36 36 L30 56 L24 36 L4 30 L24 24 Z" fill="#ffd66b" stroke="#2b1d17" stroke-width="3.5" stroke-linejoin="round"/>';
-
-          // ---------------------------------------------------------------- motion helpers
-          function flicker(flame, glow, t0, t1, seed, amp = 1) {
-            const r = rng(seed);
-            let t = t0;
-            while (t < t1) {
-              const d = 0.08 + r() * 0.12;
-              tl.to(flame, { scaleY: 1 + (r() * 0.24 - 0.1) * amp, scaleX: 1 - (r() * 0.12 - 0.04) * amp, skewX: (r() * 10 - 5) * amp, duration: d, ease: "sine.inOut" }, t);
-              if (glow) tl.to(glow, { scale: 0.94 + r() * 0.12 * amp, opacity: 0.78 + r() * 0.22, duration: d, ease: "sine.inOut" }, t);
-              t += d;
-            }
-          }
-          function breathe(a, t0, t1, amp = 0.012, period = 1.2) {
-            const n = Math.max(0, Math.floor((t1 - t0) / period) - 1);
-            tl.fromTo(a.breath, { scaleY: 1 }, { scaleY: 1 + amp, scaleX: 1 - amp * 0.4, duration: period, ease: "sine.inOut", yoyo: true, repeat: n }, t0);
-          }
-          function hop(a, t, h = 60, air = 0.46, sq = 0.12) {
-            tl.to(a.rig, { scaleY: 1 - sq, scaleX: 1 + sq * 0.7, duration: 0.1, ease: "power1.out" }, t);
-            tl.to(a.rig, { scaleY: 1 + sq * 0.8, scaleX: 1 - sq * 0.5, duration: 0.12, ease: "power2.out" }, t + 0.1);
-            tl.to(a.hopper, { y: -h, duration: air / 2, ease: "power2.out" }, t + 0.1);
-            tl.to(a.rig, { scaleY: 1, scaleX: 1, duration: 0.18, ease: "sine.out" }, t + 0.22);
-            tl.to(a.hopper, { y: 0, duration: air / 2, ease: "power2.in" }, t + 0.1 + air / 2);
-            tl.to(a.rig, { scaleY: 1 - sq, scaleX: 1 + sq * 0.7, duration: 0.07, ease: "power1.out" }, t + 0.1 + air);
-            tl.to(a.rig, { scaleY: 1, scaleX: 1, duration: 0.32, ease: "back.out(3)" }, t + 0.17 + air);
-            if (a.root.querySelector(".shadow")) {
-              const s = a.root.querySelector(".shadow");
-              tl.to(s, { scale: 0.75, opacity: 0.6, duration: air / 2, ease: "power2.out" }, t + 0.1);
-              tl.to(s, { scale: 1, opacity: 1, duration: air / 2, ease: "power2.in" }, t + 0.1 + air / 2);
-            }
-          }
-          function wave(arm, t, n = 3, up = -38, down = -8, beat = 0.22) {
-            tl.to(arm, { rotation: up, duration: 0.24, ease: "back.out(2)" }, t);
-            tl.to(arm, { rotation: down, duration: beat, ease: "sine.inOut", yoyo: true, repeat: n * 2 - 1 }, t + 0.24);
-            tl.to(arm, { rotation: 0, duration: 0.3, ease: "sine.inOut" }, t + 0.24 + beat * n * 2);
-          }
-          function waddle(a, t0, t1, step = 0.32, lift = 9, tilt = 2.2) {
-            const n = Math.max(0, Math.floor((t1 - t0) / step) - 1);
-            tl.to(a.hopper, { y: -lift, duration: step / 2, ease: "sine.out", yoyo: true, repeat: n * 2 + 1 }, t0);
-            tl.fromTo(a.rig, { rotation: -tilt }, { rotation: tilt, duration: step, ease: "sine.inOut", yoyo: true, repeat: n }, t0);
-            tl.to(a.rig, { rotation: 0, duration: 0.25 }, t0 + step * (n + 1));
-          }
-          function pop(b, t, hold, out = 0.3) {
-            tl.fromTo(b, { opacity: 0, scale: 0.2, rotation: -6 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.42, ease: "back.out(2.2)" }, t);
-            if (hold) tl.to(b, { opacity: 0, scale: 0.85, duration: out, ease: "power1.in" }, t + hold);
-          }
-          function dropLabel(lb, t, rot = -1.5, from = -60) {
-            tl.fromTo(lb.root, { opacity: 0, y: from, rotation: rot + 5 }, { opacity: 1, y: 0, rotation: rot, duration: 0.6, ease: "back.out(1.6)" }, t);
-            tl.fromTo(lb.tape, { scaleX: 0 }, { scaleX: 1, duration: 0.28, ease: "power2.out" }, t + 0.42);
-          }
-          function floatUp(n, t, dy = -170, dx = 20, dur = 1.5) {
-            tl.fromTo(n, { opacity: 0, scale: 0.2, x: 0, y: 0 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(3)" }, t);
-            tl.to(n, { y: dy, x: dx, duration: dur, ease: "sine.out" }, t + 0.05);
-            tl.to(n, { opacity: 0, duration: 0.45, ease: "power1.in" }, t + dur - 0.35);
-          }
-          function twinkle(n, t, dur = 0.7) {
-            tl.fromTo(n, { opacity: 0, scale: 0, rotation: -40 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.25, ease: "back.out(3)" }, t);
-            tl.to(n, { opacity: 0, scale: 0.3, rotation: 30, duration: 0.3, ease: "power1.in" }, t + dur - 0.3);
-          }
-          // snow: a screen-space layer of seeded flakes that fall & sway on finite repeats
-          function snow(parent, n, seed, t0, t1, o) {
-            const r = rng(seed);
-            for (let i = 0; i < n; i++) {
-              const s = o.size[0] + (o.size[1] - o.size[0]) * r();
-              const f = el("div", "flake", parent, `width:${s}px;height:${s}px;left:${-60 + r() * 2040}px;top:${-40 - s}px;opacity:${o.alpha * (0.55 + 0.45 * r())}` + (o.blur ? `;filter:blur(${o.blur}px)` : ""));
-              const fall = 1200 / (o.speed[0] + (o.speed[1] - o.speed[0]) * r());
-              const lead = r() * fall;
-              const reps = Math.max(0, Math.floor((t1 - t0 + lead) / fall));
-              tl.fromTo(f, { y: 0 }, { y: 1200, duration: fall, ease: "none", repeat: reps }, t0 - lead);
-              const sway = 1.4 + r() * 1.8;
-              tl.fromTo(f, { x: -o.drift * r() }, { x: o.drift * (0.4 + r()), duration: sway, ease: "sine.inOut", yoyo: true, repeat: Math.max(0, Math.floor((t1 - t0 + lead) / sway)) }, t0 - lead);
-            }
-          }
-          function puffBurst(parent, x, y, t, n, seed, spread = 160, size = 70) {
-            const r = rng(seed);
-            for (let i = 0; i < n; i++) {
-              const s = size * (0.6 + r() * 0.8);
-              const p = el("div", "puff", parent, `left:${x - s / 2}px;top:${y - s / 2}px;width:${s}px;height:${s}px;opacity:0`);
-              const ang = Math.PI * (1 + r()), dist = spread * (0.5 + r() * 0.7);
-              tl.fromTo(p, { opacity: 0.95, scale: 0.3, x: 0, y: 0 }, { opacity: 0, scale: 1.4, x: Math.cos(ang) * dist, y: Math.sin(ang) * dist * 0.45, duration: 0.7 + r() * 0.4, ease: "power2.out" }, t + r() * 0.06);
-            }
-          }
-          function shake(n, t, dur = 0.4, amp = 14, seed = 5) {
-            const r = rng(seed);
-            const steps = Math.floor(dur / 0.04);
-            for (let i = 0; i < steps; i++) {
-              const k = 1 - i / steps;
-              tl.to(n, { x: (r() * 2 - 1) * amp * k, y: (r() * 2 - 1) * amp * k, duration: 0.04, ease: "none" }, t + i * 0.04);
-            }
-            tl.to(n, { x: 0, y: 0, duration: 0.05 }, t + steps * 0.04);
-          }
-          // camera for a world layer (transform-origin 0 0): centre world point (cx, cy) at zoom z
-          function cam(n, t, dur, cx, cy, z, ease = "power2.inOut") {
-            const v = { x: 960 - z * cx, y: 540 - z * cy, scale: z, duration: dur, ease };
-            if (dur === 0) tl.set(n, v, t);
-            else tl.to(n, v, t);
-          }
-          function wipeIn(n, t, dur = 1, ease = "power1.inOut") {
-            tl.fromTo(n, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: dur, ease }, t);
-          }
+          const $ = (id) => document.getElementById(id);
+          const { rng, el, img, svg } = EC;
+          const HEART = EC.SHAPES.heart, STAR = EC.SHAPES.star;
+          const K = EC.kit(tl, { page: 1, ART, PANELS, WASH });
+          const { SRC, actor, sprite, bubble, label, buildPage, pageCam, cam, flicker, breathe, hop, wave, waddle, pop, dropLabel, floatUp, twinkle, snow, puffBurst, shake, wipeIn } = K;
 
           // ================================================================ TITLE (0 – 4.2)
           {
@@ -388,50 +151,6 @@
             hop(cdl, 2.7, 30, 0.38);
             wave(egg.parts["arm-r"], 2.0, 2, -34, -10, 0.2);
             tl.to(f, { opacity: 0, duration: 0.5, ease: "power1.in" }, 2.95);
-          }
-
-          // ================================================================ PAGE BUILDER (bookends)
-          // the sheet in page pixels: washes under the page ink, colored sprites on top
-          function buildPage(camEl, colored) {
-            const sheet = el("div", "sheet", camEl);
-            const washes = {};
-            let defs = "<defs>";
-            for (const [k, [a, b]] of Object.entries(WASH)) {
-              defs += `<linearGradient id="p1w-${colored ? "o" : "i"}-${k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`;
-            }
-            defs += "</defs>";
-            const wsvg = svg(sheet, 1200, 1600, "", defs);
-            for (const [k, poly] of Object.entries(PANELS)) {
-              const p = document.createElementNS(SVGNS, "polygon");
-              p.setAttribute("points", poly.map((q) => q.join(",")).join(" "));
-              p.setAttribute("fill", `url(#p1w-${colored ? "o" : "i"}-${k})`);
-              p.style.opacity = colored ? "1" : "0";
-              wsvg.appendChild(p);
-              washes[k] = p;
-            }
-            img(SRC("page-ink"), "", sheet, "width:1200px;height:1600px");
-            const layer = el("div", "", sheet, "width:1200px;height:1600px");
-            const flames = [];
-            const ids = colored ? Object.keys(ART).filter((id) => !id.startsWith("t-") && !id.startsWith("cap-")) : ["egg-hello"];
-            const group = el("div", colored ? "" : "bloom", layer, "position:absolute;left:0;top:0;width:1200px;height:1600px");
-            for (const id of ids) {
-              const [x0, y0, x1, y1] = ART[id].b;
-              const holder = el("div", "", group, `position:absolute;left:${x0}px;top:${y0}px;width:${x1 - x0}px;height:${y1 - y0}px`);
-              img(SRC(id), "spr", holder);
-              for (const [name, pa] of Object.entries(ART[id].p || {})) {
-                const [px0, py0, px1, py1] = pa.b;
-                const pv = pa.pv || [(px0 + px1) / 2, py1];
-                const p = img(SRC(`${id}--${name}`), "part", holder, `left:${px0 - x0}px;top:${py0 - y0}px;width:${px1 - px0}px;height:${py1 - py0}px;transform-origin:${pv[0] - px0}px ${pv[1] - py0}px`);
-                if (name === "flame") flames.push(p);
-              }
-            }
-            return { sheet, washes, group, flames };
-          }
-          // page camera: page point (cx, cy) at the screen centre, zoom z (outer layer carries rotation)
-          function pageCam(inner, t, dur, cx, cy, z, ease = "power2.inOut") {
-            const v = { x: -z * cx, y: -z * cy, scale: z };
-            if (dur === 0) tl.set(inner, v, t);
-            else tl.to(inner, { ...v, duration: dur, ease }, t);
           }
 
           // ================================================================ PAGE IN (2.8 – 8.4)
@@ -736,17 +455,16 @@
             tl.to($("p1-field-fade"), { opacity: 0, duration: 0.55, ease: "power1.inOut" }, 50.75);
           }
 
-          // ================================================================ PAGE OUT (50.6 – 57): the whole page, now in color
+          // ================================================================ PAGE OUT (50.6 – 55.8): the whole page, now in color
+          // ends centred on the desk (0.62x, -1.2°): page 2's sheet lands on top of it
           {
             const out = $("p1-pageout-out"), inner = $("p1-pageout-cam");
             const pg = buildPage(inner, true);
-            pg.flames.forEach((fl, i) => flicker(fl, null, 50.6, 57, 300 + i, 1));
+            pg.flames.forEach((fl, i) => flicker(fl, null, 50.6, 55.8, 300 + i, 1));
             pageCam(inner, 50.6, 0, 613, 1279, 1.75);
             tl.fromTo($("p1-pageout-fade"), { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power1.inOut" }, 50.7);
-            pageCam(inner, 51.35, 2.7, 600 + 260 / 0.62, 800, 0.62, "power2.inOut");
+            pageCam(inner, 51.35, 2.7, 600, 800, 0.62, "power2.inOut");
             tl.fromTo(out, { rotation: 0 }, { rotation: -1.2, duration: 2.7, ease: "power2.inOut" }, 51.35);
-            wipeIn($("p1-tbc"), 54.0, 1.3);
-            tl.to($("p1-endfade"), { opacity: 1, duration: 0.9, ease: "power1.in" }, 56.1);
           }
 
           window.__timelines["page1"] = tl;

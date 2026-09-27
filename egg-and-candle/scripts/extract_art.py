@@ -33,6 +33,9 @@ PAINT = {
     "candle": {"base": "wax"},
     "bubble": {"base": "paper"},
     "caption": {"base": None},
+    "letters": {"base": "hl"},
+    "mark": {"base": None},
+    "prop": {"base": "none"},
 }
 SWATCH = {
     "egg": ("#fff8ea", "#efd09e"),  # radial: highlight -> shade
@@ -45,7 +48,14 @@ SWATCH = {
     "scarf": ("#4fa7a0", "#3a8a84"),
     "pack": ("#ffc857", "#eda93a"),
     "bag": ("#9a6b4f", "#7f5540"),
+    "yolk": ("#ffd84d", "#f4a81c"),
+    "hl": ("#ffc861", "#ff9f5a"),  # hollow lettering
+    "umbrella": ("#ffd166", "#f5ab3a"),
+    "umbrella2": ("#8fc7e8", "#5f9fcb"),
+    "cushion": ("#c9a7e0", "#a883c7"),
+    "mouth": ("#c9574c", "#a8433b"),
     "white": ("#ffffff", "#f4f1ea"),
+    "tear": ("#d4eeff", "#9fd0f2"),
     "none": None,
 }
 
@@ -54,29 +64,43 @@ def ellipse(d):
     return cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (d, d))
 
 
-def page_ink(img_path, cache_dir):
-    """Binary 4x ink mask of the whole page (cached)."""
-    cache = cache_dir / (Path(img_path).stem + f"_ink{U}x.npy")
+def page_ink(img_path, cache_dir, method="fwhm"):
+    """Binary 4x ink mask of the whole page (cached).
+
+    fwhm   — keep each stroke's half-of-local-maximum core.
+    tophat — first subtract a large morphological opening, which strips the
+             grey halo a phone camera's tone mapping leaves around strokes on
+             shadowed paper, then apply the same core rule.
+    """
+    cache = cache_dir / (Path(img_path).stem + f"_ink{U}x" + ("" if method == "fwhm" else f"_{method}") + ".npy")
     if cache.exists():
         return np.load(cache)
     gray = cv2.cvtColor(cv2.imread(str(img_path)), cv2.COLOR_BGR2GRAY).astype(np.float32)
     paper = cv2.GaussianBlur(cv2.dilate(gray, ellipse(25)), (0, 0), 15)
     ink = 1 - np.clip(gray / np.maximum(paper, 1), 0, 1)
+    floor, lm = 0.12, 0.16
+    if method == "tophat":
+        bg = cv2.GaussianBlur(cv2.morphologyEx(ink, cv2.MORPH_OPEN, ellipse(21)), (0, 0), 2)
+        ink = np.clip(ink - bg, 0, 1)
+        floor, lm = 0.10, 0.14
     ink = cv2.GaussianBlur(ink, (0, 0), 0.8)
     ink = cv2.resize(ink, None, fx=U, fy=U, interpolation=cv2.INTER_CUBIC)
     local_max = cv2.GaussianBlur(cv2.dilate(ink, ellipse(31)), (0, 0), 8)
-    mask = ((ink > np.maximum(0.45 * local_max, 0.12)) & (local_max > 0.16)).astype(np.uint8)
+    mask = ((ink > np.maximum(0.45 * local_max, floor)) & (local_max > lm)).astype(np.uint8)
     cache_dir.mkdir(parents=True, exist_ok=True)
     np.save(cache, mask)
     return mask
 
 
-def drop_long_lines(crop):
+def drop_long_lines(crop, axes="hv"):
     """Remove panel borders: straight runs spanning most of the crop."""
     h, w = crop.shape
-    hl = cv2.morphologyEx(crop, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT, (int(w * 0.8), 1)))
-    vl = cv2.morphologyEx(crop, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT, (1, int(h * 0.8))))
-    return crop & (1 - cv2.dilate(hl | vl, ellipse(2 * U + 1)))
+    lines = np.zeros_like(crop)
+    if "h" in axes:
+        lines |= cv2.morphologyEx(crop, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT, (int(w * 0.8), 1)))
+    if "v" in axes:
+        lines |= cv2.morphologyEx(crop, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT, (1, int(h * 0.8))))
+    return crop & (1 - cv2.dilate(lines, ellipse(2 * U + 1)))
 
 
 def components(mask):
@@ -88,15 +112,26 @@ def components(mask):
     return lab, n, sizes, objs, touches
 
 
-def isolate(crop, kind, main_seed=None):
+def isolate(crop, kind, main_seed=None, keep_all=False, borders="hv"):
     """Keep the element's own strokes inside its (padded) crop."""
-    crop = drop_long_lines(crop)
+    crop = drop_long_lines(crop, borders)
     lab, n, sizes, objs, touches = components(crop)
     if n == 0:
         return crop
     h, w = crop.shape
 
-    if kind == "caption":
+    if keep_all:  # close-ups cut by the panel edge, bubbles with a trail of dots
+        keep = np.zeros(n + 1, bool)
+        keep[1:] = ~touches & (sizes > 4 * U * U)
+        return keep[lab].astype(np.uint8)
+
+    if kind == "mark":  # "!", "?": solid marks, keep every stroke clear of the rim
+        keep = np.zeros(n + 1, bool)
+        for i, (sl, sz) in enumerate(zip(objs, sizes), 1):
+            keep[i] = not touches[i - 1] and sz > 4 * U * U
+        return keep[lab].astype(np.uint8)
+
+    if kind in ("caption", "letters"):
         # drop the label's frame (its edges can be tilted/wavy), keep the lettering
         frame = np.zeros_like(crop)
         segs = cv2.HoughLinesP(crop * 255, 1, np.pi / 360, threshold=int(w * 0.25), minLineLength=int(min(w * 0.3, 60 * U)), maxLineGap=U)
@@ -124,6 +159,8 @@ def isolate(crop, kind, main_seed=None):
         yy, xx = np.nonzero(lab)
         k = np.argmin((xx - mx) ** 2 + (yy - my) ** 2)
         main = int(lab[yy[k], xx[k]])
+    elif kind == "bubble":  # the balloon outline is always the biggest stroke
+        main = int(np.argmax(sizes)) + 1
     else:
         order = np.argsort(-sizes)
         main = next((int(i) + 1 for i in order if not touches[i]), int(order[0]) + 1)
@@ -152,23 +189,28 @@ def paint_regions(ink, seeds, base, origin):
     interior = filled & ~closed.astype(bool)
     lab, n = ndi.label(interior)
     names = {i: base for i in range(1, n + 1)}
+    claimed = {}
     bx, by = origin
     for sx, sy, name in seeds:
         px, py = int((sx - bx) * U), int((sy - by) * U)
         if not (0 <= py < lab.shape[0] and 0 <= px < lab.shape[1]):
             print(f"  ! seed {sx},{sy} outside box", file=sys.stderr)
             continue
+        region = int(lab[py, px])
         r = 0
-        while lab[py, px] == 0 and r < 12 * U:  # seed landed on a line: search nearby
+        while region == 0 and r < 12 * U:  # seed landed on a line: take the nearest region
             r += 1
             win = lab[max(0, py - r): py + r + 1, max(0, px - r): px + r + 1]
             if win.any():
                 vals, counts = np.unique(win[win > 0], return_counts=True)
-                names[int(vals[np.argmax(counts)])] = name
-                break
-        else:
-            if lab[py, px]:
-                names[int(lab[py, px])] = name
+                region = int(vals[np.argmax(counts)])
+        if not region:
+            print(f"  ! seed {sx},{sy} ({name}) found no region", file=sys.stderr)
+            continue
+        if region in claimed and claimed[region][2] != name:
+            print(f"  ! seeds {claimed[region][:2]} ({claimed[region][2]}) and {sx},{sy} ({name}) hit the same region", file=sys.stderr)
+        claimed[region] = (sx, sy, name)
+        names[region] = name
     return lab, names
 
 
@@ -227,7 +269,7 @@ def main():
     debug = Path(sys.argv[sys.argv.index("--debug") + 1]) if "--debug" in sys.argv else None
     spec = json.loads(spec_path.read_text())
     page = spec["page"]
-    mask = page_ink(ROOT / spec["image"], ROOT / ".cache")
+    mask = page_ink(ROOT / spec["image"], ROOT / ".cache", spec.get("ink", "fwhm"))
     out_dir = ROOT / "assets" / "art" / f"p{page}"
     out_dir.mkdir(parents=True, exist_ok=True)
     manifest = {}
@@ -241,20 +283,37 @@ def main():
             keep = np.zeros_like(crop)
             cv2.fillPoly(keep, [poly], 1)
             crop &= keep
-        for (ex0, ey0, ex1, ey1) in el.get("erase", []):
-            crop[(ey0 - y0) * U: (ey1 - y0) * U, (ex0 - x0) * U: (ex1 - x0) * U] = 0
+        for (ex0, ey0, ex1, ey1) in el.get("erase", []):  # clamp: a negative start would wrap around
+            crop[max(0, (ey0 - y0) * U): max(0, (ey1 - y0) * U), max(0, (ex0 - x0) * U): max(0, (ex1 - x0) * U)] = 0
+        for mx0, my0, mx1, my1, mt in el.get("mend", []):  # re-join a stroke the photo lost (page px, thickness)
+            cv2.line(crop, (round((mx0 - x0) * U), round((my0 - y0) * U)), (round((mx1 - x0) * U), round((my1 - y0) * U)), 1, round(mt * U))
+        if el.get("min_speck"):  # paper noise on shadowed photos: drop tiny blobs
+            n_, lab_, st_, _ = cv2.connectedComponentsWithStats(crop, 8)
+            tiny = np.zeros(n_, bool)
+            tiny[1:] = st_[1:, cv2.CC_STAT_AREA] < el["min_speck"] * U * U
+            crop[tiny[lab_]] = 0
         main_seed = None
         if "main" in el:
             main_seed = ((el["main"][0] - x0) * U, (el["main"][1] - y0) * U)
-        ink = isolate(crop, kind, main_seed)
+        ink = isolate(crop, kind, main_seed, el.get("keep") == "all", el.get("borders", "hv"))
+        if el.get("drop"):  # leftover strokes (e.g. a caption frame's edge): drop the piece nearest each point
+            dlab, _ = ndi.label(ink, structure=np.ones((3, 3)))
+            yy, xx = np.nonzero(dlab)
+            for dx, dy in el["drop"]:
+                k = np.argmin((xx - (dx - x0) * U) ** 2 + (yy - (dy - y0) * U) ** 2)
+                ink[dlab == dlab[yy[k], xx[k]]] = 0
         entry = {"box": [x0, y0, x1, y1], "src": f"assets/art/p{page}/{eid}.svg", "parts": {}}
 
         # paint regions come from the intact drawing, before parts are lifted off
-        base = PAINT[kind]["base"]
+        base = el.get("base", PAINT[kind]["base"])
         if base is None:
             lab, names = np.zeros_like(ink, dtype=np.int32), {}
         else:
-            lab, names = paint_regions(ink, el.get("seeds", []), base, (x0, y0))
+            # seal lines close outlines the panel edge cuts open (paint only, never drawn)
+            sealed = ink.copy()
+            for sx0, sy0, sx1, sy1 in el.get("seal", []):
+                cv2.line(sealed, ((sx0 - x0) * U, (sy0 - y0) * U), ((sx1 - x0) * U, (sy1 - y0) * U), 1, 2 * U)
+            lab, names = paint_regions(sealed, el.get("seeds", []), base, (x0, y0))
 
         for part, pspec in el.get("parts", {}).items():
             # a part is a rect [x0, y0, x1, y1] or {"poly": [[x, y], ...], "pivot": [x, y]} in page coords
@@ -266,13 +325,20 @@ def main():
             cv2.fillPoly(pmask, [np.array([[(qx - x0) * U, (qy - y0) * U] for qx, qy in poly], np.int32)], 1)
             pink = ink & pmask
             ink &= 1 - pmask
+            if isinstance(pspec, dict) and pspec.get("underpaint"):
+                # keep painting the main under this part, so moving it never opens a hole
+                d, (iy, ix) = ndi.distance_transform_edt(lab == 0, return_indices=True)
+                fill = (pink > 0) & (lab == 0) & (d <= 5 * U)
+                lab = lab.copy()
+                lab[fill] = lab[iy, ix][fill]
             # regions enclosed by the part (e.g. the flame's inside) move with it
             for i in np.unique(lab[pmask > 0]):
                 if i and (pmask[lab == i]).mean() > 0.5:
                     names[int(i)] = "none"
             sl = (slice((py0 - y0) * U, (py1 - y0) * U), slice((px0 - x0) * U, (px1 - x0) * U))
             pcrop = pink[sl]
-            plab, pnames = paint_regions(pcrop, [], "flame" if part == "flame" else "none", (px0, py0))
+            pbase = pspec.get("base") if isinstance(pspec, dict) else None
+            plab, pnames = paint_regions(pcrop, pspec.get("seeds", []) if isinstance(pspec, dict) else [], pbase or ("flame" if part == "flame" else "none"), (px0, py0))
             (out_dir / f"{eid}--{part}.svg").write_text(build_svg(pcrop, plab, pnames))
             entry["parts"][part] = {"box": [px0, py0, px1, py1], "src": f"assets/art/p{page}/{eid}--{part}.svg"}
             if isinstance(pspec, dict) and "pivot" in pspec:
