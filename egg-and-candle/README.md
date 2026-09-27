@@ -28,6 +28,7 @@ over the previous page's colored sheet while that one is still on screen.
 | Score + effects for the whole film | `python3 scripts/score.py` | `assets/audio/score.m4a` |
 | Check that no page timeline got shifted | `node scripts/check_timelines.mjs` | report |
 | Validate / render | `npm run check` · `npm run render` | `renders/*.mp4` |
+| Photosensitivity: no more than 3 full-screen flashes in any second | `python3 scripts/flash_check.py renders/egg-and-candle.mp4` | report |
 | Share copies under 30 MiB (the whole film + one file per page) | `scripts/share_copies.sh` | `renders/share/*.mp4` |
 
 Requires Python 3 with numpy, scipy, opencv-python-headless; `potrace`;

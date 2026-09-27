@@ -352,7 +352,7 @@ for i, n in enumerate(["D4", "F4", "E4", "D4", "C#4", "D4"]):
 # C/D: the rain, the bolts
 add(sfx, whoosh(0.5, 500, 3500), o + 18.2, 0.18)
 add(sfx, whoosh(0.5, 500, 3500), o + 21.0, 0.18)
-for t in (21.55, 22.1, 22.6, 23.05, 23.5):
+for t in (21.55, 22.1, 22.65, 23.2, 23.75):
     thunder(o + t, 0.55, length=2.0)
 
 # E: the search — walking pizzicato in D minor, the umbrella in the rain
@@ -414,7 +414,7 @@ seq(music_box, [("D5", 1), ("E5", 1), ("F5", 1), ("G5", 1), ("A5", 2), ("G5", 1)
 thunder(o + 10.6, 0.6)
 # B: lightning
 add(sfx, whoosh(0.5, 500, 3500), o + 11.9, 0.18)
-for t in (12.45, 12.95, 13.4, 13.85):
+for t in (12.4, 12.95, 13.5, 14.05):
     thunder(o + t, 0.5, length=2.0)
 
 # C: "I am late!" — the music turns toward F major

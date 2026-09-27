@@ -364,9 +364,14 @@ window.EC = (function () {
       }
       tl.to(n, { x: 0, y: 0, duration: 0.05 }, t + steps * 0.04);
     }
-    // lightning: a white overlay that double-strobes
-    function flash(overlay, t, peak = 0.85) {
+    // lightning: a white overlay that double-strobes (single = one softer flash).
+    // Keep full-screen flashes to at most 3 per second (photosensitivity).
+    function flash(overlay, t, peak = 0.85, single = false) {
       tl.to(overlay, { opacity: peak, duration: 0.04, ease: "none" }, t);
+      if (single) {
+        tl.to(overlay, { opacity: 0, duration: 0.4, ease: "power2.out" }, t + 0.05);
+        return;
+      }
       tl.to(overlay, { opacity: peak * 0.2, duration: 0.07, ease: "none" }, t + 0.05);
       tl.to(overlay, { opacity: peak * 0.8, duration: 0.04, ease: "none" }, t + 0.13);
       tl.to(overlay, { opacity: 0, duration: 0.45, ease: "power2.out" }, t + 0.18);

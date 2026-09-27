@@ -268,10 +268,11 @@
             heavyRain($("p5-b-rain"), 23, 11.9, 14.9, 60, 0.6);
             cam(c, 11.9, 0, 960, 540, 1);
             cam(c, 12.2, 2.7, 960, 520, 1.06, "sine.inOut");
-            [12.45, 12.95, 13.4, 13.85].forEach((t, i) => {
-              flash(FL, t, 0.6 + (i % 2) * 0.2);
+            // one soft flash per bolt, 0.55 s apart: never more than 2 flashes in a second
+            [12.4, 12.95, 13.5, 14.05].forEach((t, i) => {
+              flash(FL, t, 0.32 + (i % 2) * 0.08, true);
               tl.fromTo(bolts[i], { opacity: 0, scaleY: 0.3 }, { opacity: 1, scaleY: 1, duration: 0.09, ease: "power4.out", immediateRender: false }, t);
-              tl.to(bolts[i], { opacity: 0.35, duration: 0.05, ease: "none", yoyo: true, repeat: 3 }, t + 0.12);
+              tl.to(bolts[i], { opacity: 0.7, duration: 0.12, ease: "sine.inOut", yoyo: true, repeat: 1 }, t + 0.15);
             });
           }
 
