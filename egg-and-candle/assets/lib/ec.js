@@ -259,6 +259,22 @@ window.EC = (function () {
     function wipeIn(n, t, dur = 1, ease = "power1.inOut") {
       tl.fromTo(n, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: dur, ease }, t);
     }
+    // a caption card written out line by line, each line wiping in left to right.
+    // B: row boundaries in page px from the art's top edge to its bottom edge.
+    function writeLines(lb, name, B, t0, per = 1.0, dur = 0.9) {
+      const base = lb.root.querySelector("img");
+      base.style.opacity = "0";
+      const top = B[0], H = B[B.length - 1] - B[0];
+      const lines = [];
+      for (let i = 1; i < B.length; i++) {
+        const tp = (((B[i - 1] - top) / H) * 100).toFixed(2), bt = (((B[B.length - 1] - B[i]) / H) * 100).toFixed(2);
+        const n = img(SRC(name), "spr", lb.root, `clip-path:inset(${tp}% 100% ${bt}% 0%)`);
+        lb.root.insertBefore(n, lb.tape);
+        tl.to(n, { clipPath: `inset(${tp}% 0% ${bt}% 0%)`, duration: dur, ease: "power1.inOut" }, t0 + (i - 1) * per);
+        lines.push(n);
+      }
+      return lines;
+    }
     // multi-line caption: rows appear top to bottom, one every `per` seconds
     function revealLines(n, t, rows, per = 0.9, dur = 0.5) {
       tl.set(n, { clipPath: "inset(0% 0% 100% 0%)" }, 0);
@@ -363,7 +379,7 @@ window.EC = (function () {
 
     return {
       SRC, actor, at, sprite, bubble, label, art, buildPage, pageCam, cam,
-      flicker, breathe, hop, wave, waddle, tremble, pop, dropLabel, floatUp, twinkle, wipeIn, revealLines,
+      flicker, breathe, hop, wave, waddle, tremble, pop, dropLabel, floatUp, twinkle, wipeIn, revealLines, writeLines,
       snow, rain, splashes, tears, puffBurst, shake, flash, dimFlame,
     };
   }

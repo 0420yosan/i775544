@@ -1,0 +1,55 @@
+{
+  "page": 4,
+  "image": "source/pages/page4.jpg",
+  "ink": "tophat",
+  "page_clip": [[64, 12], [1163, 12], [1163, 1100], [1152, 1100], [1152, 1592], [1080, 1592], [1080, 1548], [64, 1548]],
+  "panels": {
+    "p4a": [[70, 14], [1160, 14], [1160, 308], [75, 331]],
+    "p4b": [[75, 331], [880, 318], [880, 716], [75, 716]],
+    "p4c": [[880, 318], [1160, 310], [1160, 712], [880, 716]],
+    "p4d": [[75, 716], [340, 716], [340, 1104], [75, 1104]],
+    "p4e": [[340, 716], [1160, 712], [1160, 1104], [340, 1104]],
+    "p4f": [[77, 1104], [340, 1104], [340, 1490], [77, 1488]],
+    "p4g": [[340, 1104], [873, 1106], [873, 1508], [340, 1492]],
+    "p4h": [[873, 1106], [1152, 1108], [1150, 1515], [873, 1508]]
+  },
+  "elements": [
+    {"id": "egg-storm", "kind": "egg", "box": [146, 48, 395, 320],
+     "parts": {"spike": {"poly": [[340, 80], [380, 80], [380, 150], [345, 150], [343, 120], [340, 100]], "pivot": [345, 143]}},
+     "seeds": [[341, 285, "yolk"]]},
+    {"id": "t-thund1", "kind": "caption", "box": [443, 58, 666, 102], "pad": 10},
+    {"id": "t-thund2", "kind": "caption", "box": [662, 128, 866, 168], "pad": 10},
+    {"id": "t-thund3", "kind": "caption", "box": [854, 217, 1076, 260], "pad": 10},
+
+    {"id": "egg-worry", "kind": "egg", "box": [131, 380, 396, 666], "seeds": [[314, 627, "yolk"]], "drop": [[338, 450]]},
+    {"id": "think-what", "kind": "bubble", "keep": "all", "box": [330, 360, 594, 457]},
+    {"id": "t-rumble1", "kind": "caption", "box": [637, 403, 846, 444], "pad": 10},
+    {"id": "t-rumble2", "kind": "caption", "box": [573, 486, 787, 527], "pad": 10},
+    {"id": "t-rumble3", "kind": "caption", "box": [493, 583, 707, 627], "pad": 10},
+    {"id": "splash1", "kind": "prop", "keep": "all", "box": [890, 646, 970, 710], "pad": 4},
+    {"id": "splash2", "kind": "prop", "keep": "all", "box": [980, 636, 1063, 716], "pad": 4},
+    {"id": "splash3", "kind": "prop", "keep": "all", "box": [1070, 644, 1143, 697], "pad": 4},
+
+    {"id": "bolt1", "kind": "prop", "keep": "all", "base": "bolt", "box": [90, 750, 163, 893], "pad": 4},
+    {"id": "bolt2", "kind": "prop", "keep": "all", "base": "bolt", "box": [197, 787, 256, 920], "pad": 4},
+    {"id": "bolt3", "kind": "prop", "keep": "all", "base": "bolt", "box": [134, 920, 173, 1006], "pad": 4},
+    {"id": "bolt4", "kind": "prop", "keep": "all", "base": "bolt", "box": [220, 937, 253, 1006], "pad": 4},
+    {"id": "bolt5", "kind": "prop", "keep": "all", "base": "bolt", "box": [214, 1037, 246, 1093], "pad": 4},
+    {"id": "egg-umbrella", "kind": "egg", "reach": 0, "box": [545, 727, 910, 1100],
+     "seeds": [[661, 776, "umbrella"], [740, 801, "umbrella2"], [801, 794, "umbrella"], [726, 931, "mouth"]]},
+    {"id": "bub-where", "kind": "bubble", "box": [848, 857, 1056, 986]},
+
+    {"id": "cap-sky", "kind": "caption", "box": [86, 1121, 317, 1302], "pad": 2, "drop": [[312, 1280]]},
+    {"id": "dots1", "kind": "prop", "keep": "all", "box": [205, 1312, 272, 1330], "pad": 3},
+    {"id": "bub-hello", "kind": "bubble", "box": [86, 1302, 179, 1367]},
+    {"id": "bub-in", "kind": "bubble", "box": [158, 1356, 330, 1437]},
+    {"id": "dots2", "kind": "prop", "keep": "all", "box": [105, 1447, 161, 1465], "pad": 3},
+
+    {"id": "candle-umbrella", "kind": "candle", "keep": "all", "base": "umbrella", "box": [440, 1115, 735, 1486],
+     "cut": [[428, 1450.9, 573, 1379, 5], [675, 1389, 742, 1427.8, 5]],
+     "seeds": [[568, 1151, "umbrella"], [672, 1163, "umbrella2"], [650, 1217, "umbrella"], [588, 1259, "umbrella2"], [551, 1233, "umbrella"],
+               [504, 1210, "umbrella2"], [638, 1291, "cap"], [539, 1312, "none"], [595, 1437, "wax"], [551, 1404, "wax"]]},
+    {"id": "cap-found", "kind": "caption", "box": [875, 1128, 1140, 1410], "pad": 2, "drop": [[882, 1150]]},
+    {"id": "bub-allright", "kind": "bubble", "box": [883, 1405, 1140, 1490], "pad": 1}
+  ]
+}

@@ -56,6 +56,7 @@ SWATCH = {
     "mouth": ("#c9574c", "#a8433b"),
     "white": ("#ffffff", "#f4f1ea"),
     "tear": ("#d4eeff", "#9fd0f2"),
+    "bolt": ("#fff4a0", "#ffcf3a"),
     "none": None,
 }
 
@@ -112,7 +113,7 @@ def components(mask):
     return lab, n, sizes, objs, touches
 
 
-def isolate(crop, kind, main_seed=None, keep_all=False, borders="hv"):
+def isolate(crop, kind, main_seed=None, keep_all=False, borders="hv", reach_px=34):
     """Keep the element's own strokes inside its (padded) crop."""
     crop = drop_long_lines(crop, borders)
     lab, n, sizes, objs, touches = components(crop)
@@ -167,7 +168,7 @@ def isolate(crop, kind, main_seed=None, keep_all=False, borders="hv"):
     body = (lab == main).astype(np.uint8)
     sil = ndi.binary_fill_holes(cv2.morphologyEx(body, cv2.MORPH_CLOSE, ellipse(9 * U)))
     near = cv2.dilate(sil.astype(np.uint8), ellipse(4 * U + 1)).astype(bool)
-    reach = cv2.dilate(sil.astype(np.uint8), ellipse(34 * U + 1)).astype(bool)
+    reach = cv2.dilate(sil.astype(np.uint8), ellipse(reach_px * U + 1)).astype(bool)
     keep = np.zeros(n + 1, bool)
     keep[main] = True
     for i, (s, sz) in enumerate(zip(objs, sizes), 1):
@@ -177,7 +178,7 @@ def isolate(crop, kind, main_seed=None, keep_all=False, borders="hv"):
         span = max(s[0].stop - s[0].start, s[1].stop - s[1].start)
         if (near[s] & comp).any():  # face features, blush marks, accessory details
             keep[i] = True
-        elif kind != "bubble" and span >= 8 * U and (reach[s] & comp).any():  # limbs, speed lines, effect marks (not snow dots)
+        elif kind != "bubble" and reach_px and span >= 8 * U and (reach[s] & comp).any():  # limbs, speed lines, effect marks (not snow dots)
             keep[i] = True
     return keep[lab].astype(np.uint8)
 
@@ -285,6 +286,8 @@ def main():
             crop &= keep
         for (ex0, ey0, ex1, ey1) in el.get("erase", []):  # clamp: a negative start would wrap around
             crop[max(0, (ey0 - y0) * U): max(0, (ey1 - y0) * U), max(0, (ex0 - x0) * U): max(0, (ex1 - x0) * U)] = 0
+        for cx0, cy0, cx1, cy1, ct in el.get("cut", []):  # sever a neighbour's stroke that touches this drawing
+            cv2.line(crop, (round((cx0 - x0) * U), round((cy0 - y0) * U)), (round((cx1 - x0) * U), round((cy1 - y0) * U)), 0, round(ct * U))
         for mx0, my0, mx1, my1, mt in el.get("mend", []):  # re-join a stroke the photo lost (page px, thickness)
             cv2.line(crop, (round((mx0 - x0) * U), round((my0 - y0) * U)), (round((mx1 - x0) * U), round((my1 - y0) * U)), 1, round(mt * U))
         if el.get("min_speck"):  # paper noise on shadowed photos: drop tiny blobs
@@ -295,7 +298,7 @@ def main():
         main_seed = None
         if "main" in el:
             main_seed = ((el["main"][0] - x0) * U, (el["main"][1] - y0) * U)
-        ink = isolate(crop, kind, main_seed, el.get("keep") == "all", el.get("borders", "hv"))
+        ink = isolate(crop, kind, main_seed, el.get("keep") == "all", el.get("borders", "hv"), el.get("reach", 34))
         if el.get("drop"):  # leftover strokes (e.g. a caption frame's edge): drop the piece nearest each point
             dlab, _ = ndi.label(ink, structure=np.ones((3, 3)))
             yy, xx = np.nonzero(dlab)

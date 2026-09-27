@@ -27,10 +27,12 @@ for eid in sys.argv[2:]:
         crop &= keep
     for (ex0, ey0, ex1, ey1) in el.get("erase", []):
         crop[max(0, (ey0 - y0) * U): max(0, (ey1 - y0) * U), max(0, (ex0 - x0) * U): max(0, (ex1 - x0) * U)] = 0
+    for cx0, cy0, cx1, cy1, ct in el.get("cut", []):
+        cv2.line(crop, (round((cx0 - x0) * U), round((cy0 - y0) * U)), (round((cx1 - x0) * U), round((cy1 - y0) * U)), 0, round(ct * U))
     for mx0, my0, mx1, my1, mt in el.get("mend", []):
         cv2.line(crop, (round((mx0 - x0) * U), round((my0 - y0) * U)), (round((mx1 - x0) * U), round((my1 - y0) * U)), 1, round(mt * U))
     main = ((el["main"][0] - x0) * U, (el["main"][1] - y0) * U) if "main" in el else None
-    ink = ea.isolate(crop, el["kind"], main, el.get("keep") == "all", el.get("borders", "hv"))
+    ink = ea.isolate(crop, el["kind"], main, el.get("keep") == "all", el.get("borders", "hv"), el.get("reach", 34))
     sealed = ink.copy()
     for sx0, sy0, sx1, sy1 in el.get("seal", []):
         cv2.line(sealed, ((sx0 - x0) * U, (sy0 - y0) * U), ((sx1 - x0) * U, (sy1 - y0) * U), 1, 2 * U)
