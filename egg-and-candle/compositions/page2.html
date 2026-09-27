@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="page2-template">
+      <style>
+        #p2-root { position: absolute; inset: 0; overflow: hidden; }
+        #p2-root .sky-day { position: absolute; inset: 0; background: linear-gradient(180deg, #a9d3f0 0%, #cfe7f7 45%, #eef7fc 100%); }
+        #p2-root .sky-gold { position: absolute; inset: 0; background: linear-gradient(180deg, #ffd9a0 0%, #ffe6bd 50%, #fff1d8 100%); }
+        #p2-root .memory { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, #f6ead3 0%, #ecdcbc 62%, #d9c29a 100%); }
+        #p2-root .sepia { filter: sepia(0.55) saturate(0.8) contrast(0.96); }
+        #p2-root .mote { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255, 246, 222, 0.95), rgba(255, 246, 222, 0)); }
+        #p2-root .streak { position: absolute; left: 0; height: 8px; border-radius: 6px; background: rgba(255, 255, 255, 0.85); }
+        #p2-root .orbit { position: absolute; width: 0; height: 0; }
+      </style>
+
+      <div id="p2-root" class="ec" data-composition-id="page2" data-width="1920" data-height="1080" data-duration="61.8">
+        <!-- the ink page lands on page 1 and the camera pushes into panel A -->
+        <div id="p2-pagein" class="set clip" data-start="0" data-duration="6" data-track-index="1">
+          <div class="desk" id="p2-desk" style="opacity: 0"></div>
+          <div class="layer" id="p2-prev-out" style="left: 960px; top: 540px; opacity: 0">
+            <div class="layer" id="p2-prev-cam"><div class="blank"></div></div>
+          </div>
+          <div class="layer" id="p2-pagein-out" style="left: 960px; top: 540px">
+            <div class="layer" id="p2-pagein-cam"></div>
+          </div>
+        </div>
+
+        <!-- A: "I can roll!" / "Humph!" -->
+        <div id="p2-a" class="set clip" data-start="4.3" data-duration="5.5" data-track-index="2">
+          <div class="fade" id="p2-a-fade">
+            <div class="sky-day"></div>
+            <div class="layer" id="p2-a-cam"></div>
+            <div class="screen" id="p2-a-streaks"></div>
+          </div>
+        </div>
+
+        <!-- B: the crash, "Look at me serious damage!" -->
+        <div id="p2-b" class="set clip" data-start="9.6" data-duration="6.7" data-track-index="3">
+          <div class="fade" id="p2-b-fade">
+            <div class="sky-day"></div>
+            <div class="layer" id="p2-b-shake"><div class="layer" id="p2-b-cam"></div></div>
+          </div>
+        </div>
+
+        <!-- C: HA HA HA, "You're stuck!" -->
+        <div id="p2-c" class="set clip" data-start="15.8" data-duration="7.3" data-track-index="4">
+          <div class="fade" id="p2-c-fade">
+            <div class="sky-day"></div>
+            <div class="layer" id="p2-c-cam"></div>
+          </div>
+        </div>
+
+        <!-- D: the candle slips, "Huh!? I was stuck?" -->
+        <div id="p2-d" class="set clip" data-start="22.5" data-duration="7.9" data-track-index="5">
+          <div class="fade" id="p2-d-fade">
+            <div class="sky-day"></div>
+            <div class="layer" id="p2-d-shake"><div class="layer" id="p2-d-cam"></div></div>
+          </div>
+        </div>
+
+        <!-- E: "After a while..." laughing together -->
+        <div id="p2-e" class="set clip" data-start="29.6" data-duration="7.9" data-track-index="6">
+          <div class="fade" id="p2-e-fade">
+            <div class="sky-gold"></div>
+            <div class="layer" id="p2-e-cam"></div>
+          </div>
+        </div>
+
+        <!-- F: the memory, "I'm leaving" / "Why?" / "Bye!" -->
+        <div id="p2-f" class="set clip" data-start="35.6" data-duration="21.4" data-track-index="7">
+          <div class="fade" id="p2-f-fade">
+            <div class="memory"></div>
+            <div class="layer sepia" id="p2-f-cam"></div>
+            <div class="screen" id="p2-f-motes"></div>
+          </div>
+        </div>
+
+        <!-- the page again, in color; ends centred for page 3 -->
+        <div id="p2-pageout" class="set clip" data-start="55.8" data-duration="6" data-track-index="8">
+          <div class="fade" id="p2-pageout-fade">
+            <div class="layer" id="p2-pageout-out" style="left: 960px; top: 540px">
+              <div class="layer" id="p2-pageout-cam"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (() => {
+          const ART = {
+            "egg-roll": { b: [194, 34, 518, 282], p: { trail: { b: [346, 36, 518, 282] } } },
+            "bub-roll": { b: [432, 12, 634, 118] },
+            "candle-humph": { b: [738, 10, 938, 302], p: { flame: { b: [802, 18, 848, 63] } } },
+            "bub-humph": { b: [882, 16, 1038, 124] },
+            bang: { b: [144, 317, 196, 394] },
+            "egg-crash": { b: [132, 378, 430, 639] },
+            "bub-damage": { b: [330, 297, 508, 398] },
+            "candle-laugh": { b: [390, 330, 602, 652], p: { flame: { b: [480, 340, 522, 394] } } },
+            "ha-hollow": { b: [648, 294, 1004, 344] },
+            "egg-stuck": { b: [649, 389, 905, 654] },
+            "bub-stuck": { b: [920, 328, 1114, 449] },
+            "candle-fall": { b: [878, 418, 1148, 681], p: { flame: { b: [1068, 424, 1106, 471] } } },
+            "egg-shy": { b: [170, 746, 412, 1037] },
+            "bub-huh": { b: [480, 700, 700, 840] },
+            "candle-slip": { b: [462, 808, 766, 1066], p: { flame: { b: [711, 816, 753, 866] } } },
+            qmark: { b: [758, 868, 826, 974] },
+            "cap-while": { b: [930, 698, 1144, 762] },
+            "pair-laugh": { b: [924, 794, 1170, 962], p: { flame: { b: [1109, 797, 1141, 838] } } },
+            "ha-row": { b: [927, 954, 1167, 1007] },
+            "cap-recall": { b: [118, 1088, 450, 1142] },
+            "egg-why": { b: [146, 1154, 364, 1426] },
+            "egg-leave": { b: [356, 1134, 558, 1426] },
+            "bub-leaving": { b: [468, 1112, 642, 1198] },
+            "bub-why": { b: [298, 1358, 422, 1462] },
+            "flash-road": { b: [666, 1084, 1138, 1458], p: { far: { b: [982, 1097, 1043, 1155] }, bye: { b: [1036, 1093, 1097, 1143] } } },
+          };
+          const PANELS = { p2a: [[105, 14], [1186, 14], [1186, 283], [105, 299]], p2b: [[105, 299], [640, 293], [640, 690], [105, 690]], p2c: [[640, 293], [1186, 283], [1186, 688], [640, 690]], p2d: [[105, 690], [912, 690], [912, 1083], [103, 1083]], p2e: [[912, 688], [1186, 688], [1186, 1082], [912, 1083]], p2f: [[103, 1083], [1186, 1082], [1186, 1492], [100, 1494]] };
+          const WASH = { p2a: ["#c9e4f6", "#f4f9fc"], p2b: ["#d6ebf8", "#f6fafc"], p2c: ["#d6ebf8", "#f6fafc"], p2d: ["#d6ebf8", "#f6fafc"], p2e: ["#ffe3b6", "#fff1d8"], p2f: ["#efe0c4", "#dcc6a0"] };
+
+          const tl = gsap.timeline({ paused: true });
+          const $ = (id) => document.getElementById(id);
+          const { rng, el, svg, SHAPES, ridge, pine } = EC;
+          const K = EC.kit(tl, { page: 2, ART, PANELS, WASH });
+          const { actor, bubble, label, art, buildPage, pageCam, cam, flicker, breathe, hop, waddle, tremble, pop, dropLabel, floatUp, twinkle, wipeIn, puffBurst, shake } = K;
+
+          // panel-fit framing: a panel's page coordinates -> world (= screen at camera 1x)
+          const frame = (x0, y0, x1, y1, z) => ({ z: z || Math.min(1920 / (x1 - x0), 1080 / (y1 - y0)), cx: (x0 + x1) / 2, cy: (y0 + y1) / 2 });
+          const S = (F, px, py) => [960 + F.z * (px - F.cx), 540 + F.z * (py - F.cy)];
+          const place = (parent, id, name, F, opt) => { const [x0, , x1, y1] = ART[name].b; const [x, y] = S(F, (x0 + x1) / 2, y1); return actor(parent, id, name, F.z, x, y, opt); };
+          const placeBubble = (parent, id, name, F, origin) => { const [x0, y0] = ART[name].b; const [x, y] = S(F, x0, y0); return bubble(parent, id, name, F.z, x, y, origin); };
+          const placeLabel = (parent, id, name, F) => { const [x0, y0] = ART[name].b; const [x, y] = S(F, x0, y0); return label(parent, id, name, F.z, x, y); };
+          const placeArt = (parent, id, name, F, css) => { const [x0, y0] = ART[name].b; const [x, y] = S(F, x0, y0); return art(parent, id, name, F.z, x, y, css); };
+
+          // a sunny snowfield behind a panel (world px): far hills, pines, the snow ground
+          function field(camEl, groundY, seed, x0 = -900, x1 = 2900) {
+            el("div", "abs", camEl, `left:${x1 - 1500}px;top:-520px;width:1150px;height:1150px;border-radius:50%;background:radial-gradient(closest-side, rgba(255,246,205,0.9), rgba(255,240,190,0.3) 45%, rgba(255,240,190,0))`);
+            const r = rng(seed);
+            let pines = "";
+            for (let x = x0; x < x1; x += 170 + r() * 90) pines += pine(x, groundY - 70 + r() * 20, 110 + r() * 120, r() > 0.5 ? "#6f9e8c" : "#7fae9a", "#ffffff");
+            svg(camEl, 1, 1, "left:0;top:0", `<path d="${ridge(x1, groundY - 130, 120, 540, seed + 1, x0)}" fill="#dbe9f4"/>${pines}<path d="${ridge(x1, groundY, 50, 480, seed + 2, x0)}" fill="#f7fbfd"/><path d="${ridge(x1, groundY, 50, 480, seed + 2, x0)}" fill="none" stroke="#dce8f2" stroke-width="14"/>`);
+          }
+          function sparkles(camEl, n, seed, x0, x1, y0, y1, t0, t1) {
+            const r = rng(seed);
+            for (let i = 0; i < n; i++) {
+              const s = svg(camEl, 60, 60, `left:${x0 + r() * (x1 - x0)}px;top:${y0 + r() * (y1 - y0)}px;opacity:0;transform-origin:30px 30px;width:32px;height:32px`, SHAPES.sparkle);
+              for (let t = t0 + r() * 1.5; t < t1 - 0.8; t += 2.2 + r() * 2) twinkle(s, t, 0.9);
+            }
+          }
+          // slide the next panel in from the right, like turning to the next frame
+          function push(oldFade, newFade, t, dur = 0.5) {
+            newFade.style.overflow = "hidden";
+            const gutter = el("div", "abs", newFade, "left:0;top:0;width:30px;height:1080px;background:#fbf7ee;border-right:6px solid #2b1d17;box-sizing:border-box");
+            tl.fromTo(newFade, { x: 1950 }, { x: 0, duration: dur, ease: "power3.inOut" }, t);
+            tl.to(oldFade, { x: -700, duration: dur, ease: "power3.inOut" }, t);
+            tl.fromTo(gutter, { opacity: 1 }, { opacity: 0, duration: 0.2 }, t + dur - 0.1);
+          }
+
+          // ================================================================ PAGE IN (0 – 6)
+          const FA = frame(105, 14, 1186, 299);
+          {
+            // page 1 lies on the desk underneath (blank sheet at its final pose) once its slot ends
+            tl.set($("p2-prev-cam"), { x: -0.62 * 600, y: -0.62 * 800, scale: 0.62 }, 0);
+            tl.set($("p2-prev-out"), { rotation: -1.2 }, 0);
+            tl.set([$("p2-desk"), $("p2-prev-out")], { opacity: 1 }, 1.45);
+            const out = $("p2-pagein-out"), inner = $("p2-pagein-cam");
+            const pg = buildPage(inner, false, ["egg-roll", "candle-humph", "bub-roll", "bub-humph"], [645, 156]);
+            pageCam(inner, 0, 0, 600, 800, 0.62);
+            tl.fromTo(out, { y: 1000, rotation: 7 }, { y: 0, rotation: 1.0, duration: 1.25, ease: "power3.out" }, 0.05);
+            pageCam(inner, 1.9, 2.5, FA.cx, FA.cy, FA.z);
+            tl.to(out, { rotation: 0, duration: 2.5, ease: "power2.inOut" }, 1.9);
+            tl.fromTo(pg.group, { "--r": "0%" }, { "--r": "140%", duration: 1.3, ease: "power1.inOut" }, 3.4);
+            tl.to(pg.washes.p2a, { opacity: 1, duration: 1.0, ease: "power1.inOut" }, 3.7);
+          }
+
+          // ================================================================ A (4.3 – 9.8): rolling
+          {
+            const c = $("p2-a-cam");
+            field(c, 700, 11);
+            sparkles(c, 10, 5, 0, 1900, 720, 1040, 4.5, 9.8);
+            const egg = place(c, "p2-a-egg", "egg-roll", FA);
+            const cdl = place(c, "p2-a-candle", "candle-humph", FA, { glow: 170 });
+            const bRoll = placeBubble(c, "p2-a-bub-roll", "bub-roll", FA, "0% 60%");
+            const bHumph = placeBubble(c, "p2-a-bub-humph", "bub-humph", FA, "0% 60%");
+            tl.fromTo($("p2-a-fade"), { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power1.inOut" }, 4.5);
+            // the bubbles are already on the page at the cut; they just bounce on their beats
+            tl.set([bRoll, bHumph], { opacity: 1 }, 4.3);
+            cam(c, 4.3, 0, 960, 540, 1);
+            cam(c, 5.3, 1.2, 640, 560, 1.28);
+            // rolling on the spot: rocking body, bouncing, trail flickering behind
+            tl.fromTo(egg.rig, { rotation: -7 }, { rotation: 7, duration: 0.22, ease: "sine.inOut", yoyo: true, repeat: 21 }, 4.6);
+            tl.fromTo(egg.hopper, { y: 0 }, { y: -16, duration: 0.11, ease: "sine.out", yoyo: true, repeat: 41 }, 4.6);
+            tl.fromTo(egg.parts.trail, { scaleX: 0.85, opacity: 0.75 }, { scaleX: 1.15, opacity: 1, duration: 0.12, ease: "sine.inOut", yoyo: true, repeat: 39 }, 4.6);
+            egg.parts.trail.style.transformOrigin = "0% 50%";
+            tl.to(bRoll, { scale: 1.12, duration: 0.16, ease: "power2.out", yoyo: true, repeat: 1 }, 5.6);
+            tl.to(bRoll, { opacity: 0, scale: 0.85, duration: 0.3, ease: "power1.in" }, 8.3);
+            cam(c, 6.6, 1.0, 1180, 560, 1.28);
+            breathe(cdl, 4.3, 9.8, 0.01, 1.1);
+            flicker(cdl.parts.flame, cdl.glow, 4.3, 9.8, 21);
+            hop(cdl, 7.0, 40, 0.34, 0.16);
+            tl.to(bHumph, { scale: 1.14, rotation: -4, duration: 0.16, ease: "power2.out", yoyo: true, repeat: 1 }, 7.1);
+            tl.to(bHumph, { opacity: 0, scale: 0.85, duration: 0.3, ease: "power1.in" }, 8.9);
+            tl.to(cdl.parts.flameWrap, { scaleY: 1.4, duration: 0.2, ease: "power2.out" }, 7.15);
+            tl.to(cdl.parts.flameWrap, { scaleY: 1, duration: 0.4 }, 7.4);
+            // off it goes to the left; the camera whips after it
+            cam(c, 8.4, 0.8, 520, 560, 1.28, "power2.in");
+            tl.to(egg.root, { x: -1500, duration: 0.95, ease: "power2.in" }, 8.55);
+            tl.to(egg.rig, { rotation: -60, duration: 0.95, ease: "power1.in" }, 8.55);
+            const r = rng(3);
+            for (let i = 0; i < 8; i++) {
+              const s = el("div", "streak", $("p2-a-streaks"), `top:${160 + i * 105 + r() * 40}px;width:${700 + r() * 600}px;opacity:0`);
+              tl.fromTo(s, { x: -1400, opacity: 0 }, { x: 2000, opacity: 1, duration: 0.45, ease: "power2.inOut" }, 9.1 + i * 0.012);
+            }
+          }
+
+          // ================================================================ B (9.6 – 16.3): the crash
+          const FB = frame(105, 299, 640, 690, 2.5);
+          {
+            const c = $("p2-b-cam");
+            field(c, 870, 31);
+            const egg = place(c, "p2-b-egg", "egg-crash", FB);
+            const bang = placeArt(c, "p2-b-bang", "bang", FB, "opacity:0;transform-origin:50% 100%");
+            const cdl = place(c, "p2-b-candle", "candle-laugh", FB, { glow: 160 });
+            const bDamage = placeBubble(c, "p2-b-bub-damage", "bub-damage", FB, "65% 100%");
+            const kick = el("div", "abs", c, "left:0;top:0");
+            // dizzy stars circling the upside-down face
+            const [fx, fy] = S(FB, 236, 560);
+            const orbit = el("div", "orbit", c, `left:${fx}px;top:${fy}px`);
+            [0, 120, 240].forEach((a0) => {
+              const s = svg(orbit, 60, 60, "left:-45px;top:-45px;width:90px;height:90px;opacity:0;transform-origin:45px 45px", SHAPES.star);
+              const P = (j) => { const a = ((a0 + j * 30) * Math.PI) / 180; return { x: Math.cos(a) * 190, y: Math.sin(a) * 70, scale: 0.85 + 0.25 * Math.sin(a), rotation: j * 18 }; };
+              tl.set(s, P(0), 10.2);
+              for (let j = 1; j <= 36; j++) tl.to(s, { ...P(j), duration: 4.8 / 36, ease: "none" }, 10.2 + ((j - 1) * 4.8) / 36);
+              tl.to(s, { opacity: 1, duration: 0.3 }, 10.3);
+              tl.to(s, { opacity: 0, duration: 0.4 }, 14.6);
+            });
+            cam(c, 9.6, 0, 700, 600, 1.12);
+            tl.fromTo(egg.rig, { scaleY: 0.7, scaleX: 1.2 }, { scaleY: 1, scaleX: 1, duration: 0.7, ease: "elastic.out(1, 0.4)" }, 9.62);
+            shake($("p2-b-shake"), 9.62, 0.5, 22, 7);
+            puffBurst(kick, S(FB, 330, 600)[0], S(FB, 330, 600)[1], 9.62, 12, 51, 380, 110);
+            tl.fromTo(bang, { opacity: 0, scale: 0, rotation: -25 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.5, ease: "back.out(3)" }, 9.85);
+            tl.to(bang, { rotation: 8, duration: 0.18, ease: "sine.inOut", yoyo: true, repeat: 5 }, 10.4);
+            tl.to(bang, { opacity: 0, duration: 0.3 }, 14.8);
+            tremble(egg, 10.6, 11.4, 2.5, 0.05);
+            // the candle hurries over and laughs
+            tl.fromTo(cdl.root, { x: 900 }, { x: 0, duration: 1.0, ease: "power2.out" }, 10.9);
+            waddle(cdl, 10.9, 11.9, 0.2, 10, 3);
+            breathe(egg, 11.5, 16.3, 0.01, 1.1);
+            flicker(cdl.parts.flame, cdl.glow, 9.6, 16.3, 23, 1.2);
+            cam(c, 11.6, 1.1, 820, 560, 1.12);
+            tl.fromTo(cdl.hopper, { y: 0 }, { y: -14, duration: 0.12, ease: "sine.out", yoyo: true, repeat: 23 }, 12.2);
+            tl.fromTo(cdl.rig, { rotation: -3 }, { rotation: 3, duration: 0.24, ease: "sine.inOut", yoyo: true, repeat: 11 }, 12.2);
+            pop(bDamage, 12.45, 3.0);
+          }
+
+          // ================================================================ C (15.8 – 22.9): stuck
+          const FC = frame(640, 293, 1186, 688, 2.45);
+          {
+            const c = $("p2-c-cam");
+            field(c, 900, 41);
+            const egg = place(c, "p2-c-egg", "egg-stuck", FC);
+            const cdl = place(c, "p2-c-candle", "candle-fall", FC, { glow: 160 });
+            const ha = placeArt(c, "p2-c-ha", "ha-hollow", FC, "clip-path:inset(0 100% 0 0)");
+            const bStuck = placeBubble(c, "p2-c-bub-stuck", "bub-stuck", FC, "20% 100%");
+            push($("p2-b-fade"), $("p2-c-fade"), 15.8);
+            cam(c, 15.8, 0, 960, 540, 1);
+            cam(c, 16.4, 5.5, 990, 560, 1.08, "sine.inOut");
+            wipeIn(ha, 16.3, 1.3, "steps(5)");
+            tl.fromTo(ha, { y: 0 }, { y: -10, duration: 0.13, ease: "sine.out", yoyo: true, repeat: 11 }, 16.3);
+            flicker(cdl.parts.flame, cdl.glow, 15.8, 22.9, 29, 1.2);
+            cdl.rig.style.transformOrigin = "30% 95%";
+            tl.fromTo(cdl.rig, { rotation: -5 }, { rotation: 6, duration: 0.2, ease: "sine.inOut", yoyo: true, repeat: 29 }, 16.2);
+            tl.fromTo(cdl.hopper, { y: 0 }, { y: -10, duration: 0.1, ease: "sine.out", yoyo: true, repeat: 59 }, 16.2);
+            pop(bStuck, 17.4, 3.6);
+            breathe(egg, 15.8, 22.9, 0.012, 1.0);
+            // it tries to get up… and can't
+            [18.3, 19.4, 20.5].forEach((t) => {
+              tl.to(egg.rig, { scaleY: 1.1, scaleX: 0.93, duration: 0.18, ease: "power2.out" }, t);
+              tl.to(egg.rig, { scaleY: 0.9, scaleX: 1.08, duration: 0.14, ease: "power2.in" }, t + 0.2);
+              tl.to(egg.rig, { scaleY: 1, scaleX: 1, duration: 0.3, ease: "back.out(3)" }, t + 0.36);
+            });
+            tremble(egg, 21.0, 21.8, 2.5, 0.05);
+          }
+
+          // ================================================================ D (22.5 – 30.4): slipped
+          const FD = frame(105, 690, 912, 1083, 2.3);
+          {
+            const c = $("p2-d-cam");
+            field(c, 880, 61);
+            const egg = place(c, "p2-d-egg", "egg-shy", FD);
+            const cdl = place(c, "p2-d-candle", "candle-slip", FD, { glow: 160 });
+            const q = placeArt(c, "p2-d-q", "qmark", FD, "opacity:0;transform-origin:50% 100%");
+            const bHuh = placeBubble(c, "p2-d-bub-huh", "bub-huh", FD, "10% 100%");
+            const splash = el("div", "abs", c, "left:0;top:0");
+            push($("p2-c-fade"), $("p2-d-fade"), 22.5);
+            cam(c, 22.5, 0, 960, 540, 1);
+            // the candle skids in and flops into the yolk
+            tl.fromTo(cdl.root, { x: 700, rotation: -18 }, { x: 0, rotation: 0, duration: 0.75, ease: "power3.out" }, 22.6);
+            tl.fromTo(cdl.rig, { scaleY: 0.85, scaleX: 1.12 }, { scaleY: 1, scaleX: 1, duration: 0.6, ease: "elastic.out(1, 0.45)" }, 23.3);
+            shake($("p2-d-shake"), 23.3, 0.35, 12, 9);
+            puffBurst(splash, S(FD, 640, 1040)[0], S(FD, 640, 1040)[1], 23.3, 9, 71, 300, 90);
+            flicker(cdl.parts.flame, cdl.glow, 22.5, 30.4, 37, 0.9);
+            tl.fromTo(q, { opacity: 0, scale: 0, rotation: 30 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(3.5)" }, 23.8);
+            tl.to(q, { rotation: -10, duration: 0.3, ease: "sine.inOut", yoyo: true, repeat: 5 }, 24.4);
+            pop(bHuh, 24.2, 3.6);
+            tremble(cdl, 24.8, 26.4, 3, 0.05);
+            cam(c, 24.0, 5.5, 900, 560, 1.07, "sine.inOut");
+            breathe(egg, 22.5, 30.4, 0.012, 1.0);
+            // a little giggle
+            tl.fromTo(egg.hopper, { y: 0 }, { y: -9, duration: 0.1, ease: "sine.out", yoyo: true, repeat: 13 }, 25.2);
+            tl.fromTo(egg.hopper, { y: 0 }, { y: -9, duration: 0.1, ease: "sine.out", yoyo: true, repeat: 13, immediateRender: false }, 27.3);
+            tl.to(q, { opacity: 0, duration: 0.3 }, 28.2);
+          }
+
+          // ================================================================ E (29.6 – 36.8): "After a while…"
+          const FE = { z: 3.2, cx: 1049, cy: 852 };
+          {
+            const c = $("p2-e-cam");
+            el("div", "abs", c, "left:260px;top:-160px;width:1400px;height:1400px;border-radius:50%;background:radial-gradient(closest-side, rgba(255,232,170,0.95), rgba(255,210,140,0.35) 55%, rgba(255,200,130,0))");
+            svg(c, 1, 1, "left:0;top:0", `<path d="${ridge(2600, 880, 60, 520, 81, -700)}" fill="#fff4e0"/><path d="${ridge(2600, 880, 60, 520, 81, -700)}" fill="none" stroke="#f3dcb4" stroke-width="14"/>`);
+            const lab = placeLabel(c, "p2-e-lab", "cap-while", FE);
+            const pair = place(c, "p2-e-pair", "pair-laugh", FE, { glow: 150 });
+            const ha = placeArt(c, "p2-e-ha", "ha-row", FE, "clip-path:inset(0 100% 0 0)");
+            const hearts = [[440, 450], [1390, 430], [930, 330]].map(([x, y]) => svg(c, 60, 60, `left:${x}px;top:${y}px;opacity:0;transform-origin:30px 30px`, SHAPES.heart));
+            tl.fromTo($("p2-e-fade"), { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power1.inOut" }, 29.6);
+            cam(c, 29.6, 0, 960, 560, 1.0);
+            cam(c, 30.2, 6.4, 960, 600, 1.08, "sine.inOut");
+            dropLabel(lab, 30.3, -1.5, -60);
+            flicker(pair.parts.flame, pair.glow, 29.6, 36.8, 43, 1.1);
+            tl.fromTo(pair.hopper, { y: 0 }, { y: -16, duration: 0.14, ease: "sine.out", yoyo: true, repeat: 31 }, 31.0);
+            tl.fromTo(pair.rig, { rotation: -3.5 }, { rotation: 3.5, duration: 0.28, ease: "sine.inOut", yoyo: true, repeat: 15 }, 31.0);
+            wipeIn(ha, 31.4, 1.6, "steps(5)");
+            hearts.forEach((h, i) => floatUp(h, 32.2 + i * 0.6, i === 2 ? -40 : -170, i % 2 ? 24 : -18, 1.5));
+            tl.to([lab.root, pair.root, ha], { opacity: 0, duration: 0.7, ease: "power1.in" }, 35.0);
+          }
+
+          // ================================================================ F (35.6 – 57): the memory
+          const FF = frame(100, 1082, 1186, 1494);
+          {
+            const c = $("p2-f-cam");
+            svg(c, 1, 1, "left:0;top:0", `<path d="${ridge(2600, 690, 80, 560, 91, -800)}" fill="#e3d2b0"/><path d="${ridge(2600, 760, 40, 480, 93, -800)}" fill="#f3e8d2"/>`);
+            const lab = placeLabel(c, "p2-f-lab", "cap-recall", FF);
+            const why = place(c, "p2-f-why", "egg-why", FF);
+            const leave = place(c, "p2-f-leave", "egg-leave", FF);
+            const road = place(c, "p2-f-road", "flash-road", FF, { shadow: false });
+            const bLeave = placeBubble(c, "p2-f-bub-leave", "bub-leaving", FF, "10% 100%");
+            const bWhy = placeBubble(c, "p2-f-bub-why", "bub-why", FF, "15% 0%");
+            // motes drifting in the warm memory light
+            const r = rng(97);
+            for (let i = 0; i < 26; i++) {
+              const s = 6 + r() * 14;
+              const m = el("div", "mote", $("p2-f-motes"), `left:${r() * 1920}px;top:${r() * 1080}px;width:${s}px;height:${s}px;opacity:${0.35 + r() * 0.4}`);
+              tl.fromTo(m, { x: -30 * r(), y: 20 }, { x: 40 * r(), y: -60 - r() * 60, duration: 5 + r() * 4, ease: "sine.inOut", yoyo: true, repeat: 2 }, 35.6 - r() * 3);
+            }
+            tl.fromTo($("p2-f-fade"), { opacity: 0 }, { opacity: 1, duration: 1.8, ease: "power1.inOut" }, 35.6);
+            cam(c, 35.6, 0, 470, 515, 1.45);
+            dropLabel(lab, 36.7, -1, -40);
+            tl.to(lab.root, { opacity: 0, duration: 0.6 }, 43.7);
+            tl.to(lab.root, { opacity: 1, duration: 0.8 }, 54.5);
+            breathe(why, 35.6, 57, 0.01, 1.3);
+            breathe(leave, 35.6, 44.5, 0.01, 1.2);
+            pop(bLeave, 38.0, 2.7);
+            tl.to(leave.rig, { rotation: 4, duration: 0.8, ease: "sine.inOut" }, 38.2);
+            pop(bWhy, 40.1, 2.7);
+            tl.to(why.rig, { rotation: 5, duration: 0.7, ease: "sine.inOut" }, 40.2);
+            tremble(why, 40.6, 41.6, 2, 0.06);
+            // the friend walks off to the right
+            tl.to(leave.root, { x: 620, duration: 2.4, ease: "sine.in" }, 42.3);
+            waddle(leave, 42.3, 44.6, 0.34, 9, 3);
+            tl.to(leave.root, { opacity: 0, duration: 0.7 }, 44.0);
+            tl.to(why.rig, { rotation: 0, duration: 1.0, ease: "sine.inOut" }, 43.0);
+            cam(c, 43.6, 2.1, 1290, 530, 1.35, "power2.inOut");
+            // …and far down the road, getting smaller, until "Bye!"
+            const far = road.parts.far, bye = road.parts.bye;
+            tl.set(far, { opacity: 0 }, 0);
+            tl.set(bye, { opacity: 0, transformOrigin: "0% 60%" }, 0);
+            const path = [[943, 1262, 1.35], [952, 1234, 1.25], [965, 1210, 1.16], [981, 1186, 1.08], [1012.5, 1155, 1]];
+            const off = (p) => ({ x: (p[0] - 1012.5) * FF.z, y: (p[1] - 1155) * FF.z, scale: p[2] });
+            tl.set(far, off(path[0]), 44.6);
+            tl.to(far, { opacity: 1, duration: 0.6 }, 44.6);
+            path.slice(1).forEach((p, i) => tl.to(far, { ...off(p), duration: 1.5, ease: "none" }, 45.0 + i * 1.5));
+            tl.fromTo(far, { rotation: -6 }, { rotation: 6, duration: 0.3, ease: "sine.inOut", yoyo: true, repeat: 19 }, 44.8);
+            tl.to(far, { rotation: 0, duration: 0.2 }, 50.9);
+            tl.fromTo(bye, { opacity: 0, scale: 0.2 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2.5)" }, 51.6);
+            // back to the whole panel, as drawn
+            cam(c, 54.1, 1.7, 960, 540, 1, "power2.inOut");
+          }
+
+          // ================================================================ PAGE OUT (55.8 – 61.8)
+          {
+            const out = $("p2-pageout-out"), inner = $("p2-pageout-cam");
+            const pg = buildPage(inner, true);
+            pg.flames.forEach((fl, i) => flicker(fl, null, 55.8, 61.8, 400 + i, 1));
+            pageCam(inner, 55.8, 0, FF.cx, FF.cy, FF.z);
+            tl.fromTo($("p2-pageout-fade"), { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power1.inOut" }, 55.85);
+            pageCam(inner, 56.6, 2.7, 600, 800, 0.62, "power2.inOut");
+            tl.fromTo(out, { rotation: 0 }, { rotation: 1.0, duration: 2.7, ease: "power2.inOut" }, 56.6);
+          }
+
+          window.__timelines["page2"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="page5-template">
+      <style>
+        @font-face {
+          font-family: "Patrick Hand";
+          src: url("assets/fonts/patrick-hand-latin-400-normal.woff2") format("woff2");
+        }
+        #p5-root { position: absolute; inset: 0; overflow: hidden; font-family: "Patrick Hand", cursive; }
+        #p5-root .sky-storm { position: absolute; inset: 0; background: linear-gradient(180deg, #1d243b 0%, #313b58 55%, #465372 100%); }
+        #p5-root .sky-rain { position: absolute; inset: 0; background: linear-gradient(180deg, #2a3350 0%, #414d6c 55%, #5a6784 100%); }
+        #p5-root .sky-soft { position: absolute; inset: 0; background: linear-gradient(180deg, #6f7fa6 0%, #a3aecb 55%, #d3d6e4 100%); }
+        #p5-root .sky-warm { position: absolute; inset: 0; background: linear-gradient(180deg, #ffc98f 0%, #ffe0b5 52%, #fff2dc 100%); }
+        #p5-root .sky-gold { position: absolute; inset: 0; background: linear-gradient(180deg, #ffb77c 0%, #ffd9a6 50%, #fff0d6 100%); }
+        #p5-root .sky-dawn { position: absolute; inset: 0; background: linear-gradient(180deg, #ffc5a1 0%, #ffe1bd 45%, #fff5e4 100%); }
+        #p5-root .flash { position: absolute; inset: 0; background: #f4f7ff; opacity: 0; }
+        #p5-root .endcard { position: absolute; inset: 0; background: #fbf7ee; }
+        #p5-root .amp { position: absolute; font-size: 150px; line-height: 1; color: #2b1d17; }
+        #p5-root .hope-glow { position: absolute; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 214, 110, 0.85), rgba(255, 200, 90, 0.35) 50%, rgba(255, 190, 80, 0)); }
+      </style>
+
+      <div id="p5-root" class="ec" data-composition-id="page5" data-width="1920" data-height="1080" data-duration="76.2">
+        <!-- the ink page lands on page 4 and the camera pushes into the first panel -->
+        <div id="p5-pagein" class="set clip" data-start="0" data-duration="6" data-track-index="1">
+          <div class="desk" id="p5-desk" style="opacity: 0"></div>
+          <div class="layer" id="p5-prev-out" style="left: 960px; top: 540px; opacity: 0">
+            <div class="layer" id="p5-prev-cam"><div class="blank"></div></div>
+          </div>
+          <div class="layer" id="p5-pagein-out" style="left: 960px; top: 540px">
+            <div class="layer" id="p5-pagein-cam"></div>
+          </div>
+        </div>
+
+        <!-- A: running through the rain to the corner -->
+        <div id="p5-a" class="set clip" data-start="4.3" data-duration="8" data-track-index="2">
+          <div class="fade" id="p5-a-fade">
+            <div class="sky-storm"></div>
+            <div class="screen" id="p5-a-rain-back"></div>
+            <div class="layer" id="p5-a-cam"></div>
+            <div class="screen" id="p5-a-rain"></div>
+          </div>
+        </div>
+
+        <!-- B: lightning -->
+        <div id="p5-b" class="set clip" data-start="11.9" data-duration="3" data-track-index="3">
+          <div class="fade" id="p5-b-fade">
+            <div class="sky-storm"></div>
+            <div class="layer" id="p5-b-cam"></div>
+            <div class="screen" id="p5-b-rain"></div>
+          </div>
+        </div>
+
+        <!-- C: "I am late!" -->
+        <div id="p5-c" class="set clip" data-start="14.5" data-duration="9.1" data-track-index="4">
+          <div class="fade" id="p5-c-fade">
+            <div class="sky-rain"></div>
+            <div class="screen" id="p5-c-rain-back"></div>
+            <div class="layer" id="p5-c-cam"></div>
+            <div class="screen" id="p5-c-rain"></div>
+          </div>
+        </div>
+
+        <!-- D: the hug; the rain stops -->
+        <div id="p5-d" class="set clip" data-start="22.6" data-duration="10.4" data-track-index="5">
+          <div class="fade" id="p5-d-fade">
+            <div class="sky-soft"></div>
+            <div class="screen" id="p5-d-rain"></div>
+            <div class="layer" id="p5-d-cam"></div>
+          </div>
+        </div>
+
+        <!-- E: "Your fire back!" -->
+        <div id="p5-e" class="set clip" data-start="32.6" data-duration="11.3" data-track-index="6">
+          <div class="fade" id="p5-e-fade">
+            <div class="sky-warm"></div>
+            <div class="sky-soft" id="p5-e-cold"></div>
+            <div class="layer" id="p5-e-cam"></div>
+          </div>
+        </div>
+
+        <!-- F: "We always are best friends" / "Yes, forever~" -->
+        <div id="p5-f" class="set clip" data-start="42.6" data-duration="10.4" data-track-index="7">
+          <div class="fade" id="p5-f-fade">
+            <div class="sky-gold"></div>
+            <div class="layer" id="p5-f-cam"></div>
+          </div>
+        </div>
+
+        <!-- G: the bridge at sunrise, "his name is HOPE" -->
+        <div id="p5-g" class="set clip" data-start="51.6" data-duration="14" data-track-index="8">
+          <div class="fade" id="p5-g-fade">
+            <div class="sky-dawn"></div>
+            <div class="layer" id="p5-g-cam"></div>
+          </div>
+        </div>
+
+        <!-- lightning over the storm shots -->
+        <div id="p5-fx" class="set clip" data-start="4.3" data-duration="10.6" data-track-index="9">
+          <div class="flash" id="p5-flash"></div>
+        </div>
+
+        <!-- the page again, in color -->
+        <div id="p5-pageout" class="set clip" data-start="64.2" data-duration="7" data-track-index="10">
+          <div class="fade" id="p5-pageout-fade">
+            <div class="layer" id="p5-pageout-out" style="left: 960px; top: 540px">
+              <div class="layer" id="p5-pageout-cam"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- end card: the title again, and the two of them -->
+        <div id="p5-end" class="set clip" data-start="70.2" data-duration="6" data-track-index="11">
+          <div class="fade" id="p5-end-fade">
+            <div class="endcard"></div>
+            <div class="screen" id="p5-end-card"></div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (() => {
+          const ART = {
+            "egg-run": { b: [207, 64, 478, 354] },
+            "candle-hide": { b: [762, 24, 1058, 336] },
+            "bolt-a": { b: [141, 381, 209, 506] },
+            "bolt-b": { b: [171, 474, 263, 649] },
+            "bolt-c": { b: [91, 601, 163, 729] },
+            "bolt-d": { b: [227, 624, 283, 729] },
+            "bub-late": { b: [325, 369, 468, 511] },
+            "egg-late": { b: [441, 340, 891, 712] },
+            "candle-late": { b: [727, 462, 868, 708] },
+            "bub-never1": { b: [85, 794, 258, 909] },
+            hug: { b: [209, 789, 451, 1111] },
+            "bub-sorry": { b: [412, 749, 582, 878] },
+            "bub-never2": { b: [432, 889, 581, 988] },
+            "bub-fire": { b: [591, 749, 741, 885] },
+            "pair-happy": { b: [634, 772, 1009, 1089], p: { flame: { b: [928, 780, 968, 826] } } },
+            "bub-promise": { b: [979, 729, 1136, 865] },
+            "bub-always": { b: [84, 1144, 316, 1280] },
+            "bub-forever": { b: [371, 1150, 572, 1243] },
+            "pair-hands": { b: [156, 1236, 521, 1552], p: { flame: { b: [438, 1243, 478, 1297] } } },
+            "cap-hope": { b: [604, 1133, 1108, 1241] },
+            "pair-bridge": { b: [596, 1236, 1148, 1538], p: { flame: { b: [881, 1243, 919, 1279] } } },
+          };
+          const PANELS = {
+            p5a: [[27, 70], [1110, 40], [1110, 322], [40, 365]],
+            p5b: [[40, 365], [308, 360], [308, 745], [42, 750]],
+            p5c: [[308, 360], [1110, 340], [1110, 738], [308, 745]],
+            p5d: [[45, 752], [588, 752], [588, 1128], [52, 1130]],
+            p5e: [[588, 752], [1130, 742], [1130, 1127], [588, 1128]],
+            p5f: [[54, 1140], [598, 1135], [598, 1545], [58, 1548]],
+            p5g: [[598, 1135], [1140, 1130], [1140, 1535], [604, 1545]],
+          };
+          const WASH = {
+            p5a: ["#6c7898", "#b0b9cd"], p5b: ["#56627f", "#9ea8bf"], p5c: ["#7d89a7", "#c0c8d8"], p5d: ["#b3bad3", "#e2e4ee"],
+            p5e: ["#ffd9ae", "#fff0dc"], p5f: ["#ffcf9c", "#fff1dc"], p5g: ["#ffd0ab", "#fff5e6"],
+          };
+
+          const tl = gsap.timeline({ paused: true });
+          const $ = (id) => document.getElementById(id);
+          const { rng, el, img, svg, SHAPES, ridge } = EC;
+          const K = EC.kit(tl, { page: 5, ART, PANELS, WASH });
+          const { actor, bubble, label, art, buildPage, pageCam, cam, flicker, breathe, hop, waddle, tremble, pop, dropLabel, floatUp, twinkle, writeLines, rain, splashes, tears, shake, flash } = K;
+
+          // panel-fit framing: a panel's page coordinates -> world (= screen at camera 1x)
+          const frame = (x0, y0, x1, y1, z) => ({ z: z || Math.min(1920 / (x1 - x0), 1080 / (y1 - y0)), cx: (x0 + x1) / 2, cy: (y0 + y1) / 2 });
+          const S = (F, px, py) => [960 + F.z * (px - F.cx), 540 + F.z * (py - F.cy)];
+          const place = (parent, id, name, F, opt) => { const [x0, , x1, y1] = ART[name].b; const [x, y] = S(F, (x0 + x1) / 2, y1); return actor(parent, id, name, F.z, x, y, opt); };
+          const placeBubble = (parent, id, name, F, origin) => { const [x0, y0] = ART[name].b; const [x, y] = S(F, x0, y0); return bubble(parent, id, name, F.z, x, y, origin); };
+          const placeLabel = (parent, id, name, F) => { const [x0, y0] = ART[name].b; const [x, y] = S(F, x0, y0); return label(parent, id, name, F.z, x, y); };
+          const placeArt = (parent, id, name, F, css) => { const [x0, y0] = ART[name].b; const [x, y] = S(F, x0, y0); return art(parent, id, name, F.z, x, y, css); };
+
+          function stormField(camEl, groundY, seed, x0 = -900, x1 = 2900) {
+            const r = rng(seed);
+            let trees = "";
+            for (let x = x0; x < x1; x += 230 + r() * 160) {
+              const h = 140 + r() * 150, y = groundY - 60 + r() * 20;
+              trees += `<g transform="translate(${x} ${y})"><path d="M-5 0 L-4 ${-h * 0.55} L4 ${-h * 0.55} L5 0 Z" fill="#1c2336"/><ellipse cx="0" cy="${-h * 0.7}" rx="${h * 0.28}" ry="${h * 0.34}" fill="#222a40"/></g>`;
+            }
+            let puddles = "";
+            for (let i = 0; i < 7; i++) {
+              const px = x0 + 300 + r() * (x1 - x0 - 600), py = groundY + 60 + r() * 140, w = 120 + r() * 160;
+              puddles += `<ellipse cx="${px}" cy="${py}" rx="${w}" ry="${w * 0.12}" fill="#5f6d8b"/><ellipse cx="${px - w * 0.2}" cy="${py - 2}" rx="${w * 0.45}" ry="${w * 0.03}" fill="#8894ae"/>`;
+            }
+            svg(camEl, 1, 1, "left:0;top:0", `<path d="${ridge(x1, groundY - 120, 110, 560, seed + 1, x0)}" fill="#2a3350"/>${trees}<path d="${ridge(x1, groundY, 40, 500, seed + 2, x0)}" fill="#434e69"/><path d="${ridge(x1, groundY, 40, 500, seed + 2, x0)}" fill="none" stroke="#56637f" stroke-width="12"/>${puddles}`);
+          }
+          // soft meadow for the calm after the storm
+          function meadow(camEl, groundY, seed, fill, edge, hill, x0 = -900, x1 = 2900) {
+            svg(camEl, 1, 1, "left:0;top:0", `<path d="${ridge(x1, groundY - 110, 90, 600, seed + 1, x0)}" fill="${hill}"/><path d="${ridge(x1, groundY, 40, 520, seed + 2, x0)}" fill="${fill}"/><path d="${ridge(x1, groundY, 40, 520, seed + 2, x0)}" fill="none" stroke="${edge}" stroke-width="12"/>`);
+          }
+          function push(oldFade, newFade, t, dur = 0.5) {
+            newFade.style.overflow = "hidden";
+            const gutter = el("div", "abs", newFade, "left:0;top:0;width:30px;height:1080px;background:#fbf7ee;border-right:6px solid #2b1d17;box-sizing:border-box");
+            tl.fromTo(newFade, { x: 1950 }, { x: 0, duration: dur, ease: "power3.inOut" }, t);
+            tl.to(oldFade, { x: -700, duration: dur, ease: "power3.inOut" }, t);
+            tl.fromTo(gutter, { opacity: 1 }, { opacity: 0, duration: 0.2 }, t + dur - 0.1);
+          }
+          function sparkles(camEl, n, seed, x0, x1, y0, y1, t0, t1, size = 34) {
+            const r = rng(seed);
+            for (let i = 0; i < n; i++) {
+              const s = svg(camEl, 60, 60, `left:${x0 + r() * (x1 - x0)}px;top:${y0 + r() * (y1 - y0)}px;opacity:0;transform-origin:30px 30px;width:${size}px;height:${size}px`, SHAPES.sparkle);
+              for (let t = t0 + r() * 1.5; t < t1 - 0.8; t += 1.8 + r() * 1.8) twinkle(s, t, 0.9);
+            }
+          }
+          const FL = $("p5-flash");
+          const heavyRain = (layer, seed, t0, t1, n = 70, alpha = 0.7) => rain(layer, n, seed, t0, t1, { len: [70, 130], width: [3, 5], speed: [1900, 2600], slant: -420, alpha });
+
+          // ================================================================ PAGE IN (0 – 6)
+          const FA = frame(27, 40, 1110, 365);
+          {
+            tl.set($("p5-prev-cam"), { x: -0.62 * 600, y: -0.62 * 800, scale: 0.62 }, 0);
+            tl.set($("p5-prev-out"), { rotation: 1.2 }, 0);
+            tl.set([$("p5-desk"), $("p5-prev-out")], { opacity: 1 }, 1.45);
+            const out = $("p5-pagein-out"), inner = $("p5-pagein-cam");
+            const pg = buildPage(inner, false, ["egg-run", "candle-hide"], [568, 205]);
+            pageCam(inner, 0, 0, 600, 800, 0.62);
+            tl.fromTo(out, { y: 1000, rotation: -7 }, { y: 0, rotation: -0.8, duration: 1.25, ease: "power3.out" }, 0.05);
+            pageCam(inner, 1.9, 2.5, FA.cx, FA.cy, FA.z);
+            tl.to(out, { rotation: 0, duration: 2.5, ease: "power2.inOut" }, 1.9);
+            tl.fromTo(pg.group, { "--r": "0%" }, { "--r": "140%", duration: 1.3, ease: "power1.inOut" }, 3.4);
+            tl.to(pg.washes.p5a, { opacity: 1, duration: 1.0, ease: "power1.inOut" }, 3.7);
+          }
+
+          // ================================================================ A (4.3 – 12.3): the run
+          {
+            const c = $("p5-a-cam");
+            stormField(c, 930, 11);
+            // the corner he hides in: two walls meeting behind him, floor between the drawn lines
+            const P = (px, py) => S(FA, px, py);
+            const L = (px) => 343.1 - 0.4985 * (px - 700), R = (px) => 252.8 + 0.556 * (px - 1030);
+            const V = P(960, 214), la = P(700, L(700)), lb = P(1400, R(1400));
+            svg(c, 1, 1, "left:0;top:0", `<path d="M${la[0]} -900 L${V[0]} -900 L${V[0]} ${V[1]} L${la[0]} ${la[1]} Z" fill="#363d58"/>
+              <path d="M${V[0]} -900 L${lb[0]} -900 L${lb[0]} ${lb[1]} L${V[0]} ${V[1]} Z" fill="#2e3550"/>
+              <path d="M${la[0]} ${la[1]} L${V[0]} ${V[1]} L${lb[0]} ${lb[1]} L${lb[0]} 1400 L${la[0]} 1400 Z" fill="#454f6b"/>
+              <path d="M${la[0]} -900 L${la[0]} ${la[1]} L${V[0]} ${V[1]} L${lb[0]} ${lb[1]} M${V[0]} ${V[1]} L${V[0]} -900" fill="none" stroke="#2b1d17" stroke-width="8" stroke-linejoin="round"/>`);
+            const cdl = place(c, "p5-a-candle", "candle-hide", FA);
+            const egg = place(c, "p5-a-egg", "egg-run", FA);
+            tl.fromTo($("p5-a-fade"), { opacity: 0 }, { opacity: 1, duration: 0.7, ease: "power1.inOut" }, 4.4);
+            heavyRain($("p5-a-rain-back"), 13, 4.3, 12.3, 60, 0.45);
+            heavyRain($("p5-a-rain"), 15, 4.3, 12.3, 30, 0.7);
+            splashes(c, 16, 17, 4.3, 12.3, 930, 1060, -200, 2100);
+            // running flat out, umbrella tipped into the wind
+            tl.fromTo(egg.root, { x: -1100 }, { x: 0, duration: 4.6, ease: "sine.out" }, 4.5);
+            const n = Math.floor(4.6 / 0.12);
+            tl.fromTo(egg.hopper, { y: 0 }, { y: -18, duration: 0.12, ease: "sine.out", yoyo: true, repeat: n }, 4.5);
+            tl.fromTo(egg.rig, { rotation: 4 }, { rotation: 10, duration: 0.12, ease: "sine.inOut", yoyo: true, repeat: n }, 4.5);
+            tl.to(egg.rig, { rotation: 0, duration: 0.4, ease: "back.out(2)" }, 9.2);
+            breathe(egg, 9.2, 12.3, 0.03, 0.35);
+            // he doesn't know yet: shivering in the corner
+            tremble(cdl, 4.3, 12.3, 1.6, 0.05);
+            breathe(cdl, 4.3, 12.3, 0.01, 1.4);
+            cam(c, 4.3, 0, 700, 560, 1.05);
+            cam(c, 5.0, 4.4, 1100, 560, 1.0, "sine.inOut");
+            flash(FL, 10.6, 0.5);
+          }
+
+          // ================================================================ B (11.9 – 14.9): lightning
+          const FB = { z: 2.4, cx: 187, cy: 555 };
+          {
+            const c = $("p5-b-cam");
+            svg(c, 1, 1, "left:0;top:0", `<path d="${ridge(2600, 1010, 90, 520, 21, -700)}" fill="#252d45"/>`);
+            const bolts = ["bolt-a", "bolt-b", "bolt-c", "bolt-d"].map((n, i) => placeArt(c, `p5-b-b${i}`, n, FB, "opacity:0;transform-origin:50% 0%"));
+            push($("p5-a-fade"), $("p5-b-fade"), 11.9);
+            heavyRain($("p5-b-rain"), 23, 11.9, 14.9, 60, 0.6);
+            cam(c, 11.9, 0, 960, 540, 1);
+            cam(c, 12.2, 2.7, 960, 520, 1.06, "sine.inOut");
+            // one soft flash per bolt, 0.55 s apart: never more than 2 flashes in a second
+            [12.4, 12.95, 13.5, 14.05].forEach((t, i) => {
+              flash(FL, t, 0.32 + (i % 2) * 0.08, true);
+              tl.fromTo(bolts[i], { opacity: 0, scaleY: 0.3 }, { opacity: 1, scaleY: 1, duration: 0.09, ease: "power4.out", immediateRender: false }, t);
+              tl.to(bolts[i], { opacity: 0.7, duration: 0.12, ease: "sine.inOut", yoyo: true, repeat: 1 }, t + 0.15);
+            });
+          }
+
+          // ================================================================ C (14.5 – 23): "I am late!"
+          const FC = frame(308, 340, 1110, 745);
+          {
+            const c = $("p5-c-cam");
+            stormField(c, 1000, 31);
+            const cdl = place(c, "p5-c-candle", "candle-late", FC);
+            const egg = place(c, "p5-c-egg", "egg-late", FC);
+            const bLate = placeBubble(c, "p5-c-bub-late", "bub-late", FC, "90% 100%");
+            push($("p5-b-fade"), $("p5-c-fade"), 14.5);
+            heavyRain($("p5-c-rain-back"), 33, 14.5, 23.0, 70, 0.5);
+            heavyRain($("p5-c-rain"), 35, 14.5, 23.0, 20, 0.55);
+            splashes(c, 16, 37, 14.5, 23.0, 1000, 1070, -100, 2000);
+            cam(c, 14.5, 0, 960, 540, 1);
+            // he rushes in and holds the umbrella over his friend
+            tl.fromTo(egg.root, { x: -900 }, { x: 0, duration: 1.3, ease: "power3.out" }, 14.7);
+            waddle(egg, 14.7, 16.0, 0.16, 12, 5);
+            tl.fromTo(egg.rig, { scaleY: 0.9, scaleX: 1.08 }, { scaleY: 1, scaleX: 1, duration: 0.6, ease: "elastic.out(1, 0.45)" }, 16.0);
+            pop(bLate, 16.4, 3.4);
+            // out of breath
+            tl.fromTo(egg.breath, { scaleY: 1 }, { scaleY: 1.035, scaleX: 0.985, duration: 0.22, ease: "sine.inOut", yoyo: true, repeat: 25 }, 16.3);
+            tremble(cdl, 14.5, 18.6, 1.6, 0.05);
+            breathe(cdl, 18.6, 23.0, 0.01, 1.3);
+            // he looks up
+            tl.to(cdl.rig, { rotation: -4, scaleY: 1.03, duration: 1.0, ease: "sine.inOut" }, 19.0);
+            cam(c, 17.0, 5.8, 1000, 560, 1.06, "sine.inOut");
+          }
+
+          // ================================================================ D (22.6 – 33): the hug
+          const FD = { z: 2.7, cx: 316.5, cy: 941 };
+          {
+            const c = $("p5-d-cam");
+            const glow = el("div", "abs", c, "left:360px;top:-120px;width:1300px;height:1300px;border-radius:50%;background:radial-gradient(closest-side, rgba(255,214,150,0.85), rgba(255,200,130,0.3) 55%, rgba(255,200,130,0));opacity:0");
+            meadow(c, 1000, 41, "#d9dce8", "#c3c8da", "#b7bdd2");
+            const hug = place(c, "p5-d-hug", "hug", FD);
+            const bSorry = placeBubble(c, "p5-d-bub-sorry", "bub-sorry", FD, "10% 100%");
+            const bNever1 = placeBubble(c, "p5-d-bub-never1", "bub-never1", FD, "90% 100%");
+            const bNever2 = placeBubble(c, "p5-d-bub-never2", "bub-never2", FD, "0% 50%");
+            const hearts = [[600, 420], [1400, 520], [1000, 150]].map(([x, y]) => svg(c, 60, 60, `left:${x}px;top:${y}px;opacity:0;transform-origin:30px 30px`, SHAPES.heart));
+            tl.fromTo($("p5-d-fade"), { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "power1.inOut" }, 22.6);
+            // the rain thins and stops
+            rain($("p5-d-rain"), 50, 43, 22.6, 28.5, { len: [60, 110], width: [3, 4], speed: [1700, 2300], slant: -380, alpha: 0.55 });
+            tl.to($("p5-d-rain"), { opacity: 0, duration: 2.5, ease: "power1.in" }, 26.0);
+            cam(c, 22.6, 0, 960, 560, 1.04);
+            cam(c, 23.0, 9.8, 960, 540, 1.0, "sine.inOut");
+            // holding on tight
+            breathe(hug, 22.6, 33.0, 0.015, 0.9);
+            [23.2, 25.6, 28.2, 30.6].forEach((t) => {
+              tl.to(hug.rig, { scaleX: 0.95, scaleY: 1.03, duration: 0.35, ease: "sine.out" }, t);
+              tl.to(hug.rig, { scaleX: 1, scaleY: 1, duration: 0.6, ease: "elastic.out(1, 0.5)" }, t + 0.35);
+            });
+            tears(hug, [[372, 902], [398, 897]], 23.2, 29.0, 45, 22, 110);
+            pop(bSorry, 23.4, 3.0);
+            tremble(hug, 23.5, 25.2, 1.2, 0.06);
+            pop(bNever1, 26.3, 3.0);
+            pop(bNever2, 29.3, 3.0);
+            tl.to(glow, { opacity: 1, duration: 4.0, ease: "power1.inOut" }, 27.5);
+            hearts.forEach((h, i) => floatUp(h, 30.3 + i * 0.45, -170, i % 2 ? 26 : -20, 1.6));
+          }
+
+          // ================================================================ E (32.6 – 43): "Your fire back!"
+          const FE = { z: 2.55, cx: 859, cy: 935 };
+          {
+            const c = $("p5-e-cam");
+            const sun = el("div", "abs", c, "left:560px;top:-300px;width:1200px;height:1200px;border-radius:50%;background:radial-gradient(closest-side, rgba(255,236,170,0.95), rgba(255,214,140,0.4) 50%, rgba(255,210,140,0));opacity:0");
+            meadow(c, 960, 51, "#f7e9d2", "#ecd6b3", "#f1dcc0");
+            const pair = place(c, "p5-e-pair", "pair-happy", FE, { glow: 190 });
+            const bFire = placeBubble(c, "p5-e-bub-fire", "bub-fire", FE, "85% 100%");
+            const bPromise = placeBubble(c, "p5-e-bub-promise", "bub-promise", FE, "20% 100%");
+            const [wx, wy] = S(FE, 948, 826);
+            const burst = el("div", "abs", c, "left:0;top:0");
+            push($("p5-d-fade"), $("p5-e-fade"), 32.6);
+            cam(c, 32.6, 0, 960, 540, 1);
+            breathe(pair, 32.6, 43.0, 0.012, 1.1);
+            // no flame yet
+            tl.set(pair.parts.flameWrap, { scale: 0, opacity: 0 }, 0);
+            tl.set(pair.glow, { opacity: 0, scale: 0.3 }, 0);
+            // a squeeze of the hand… and the flame comes back
+            tl.to(pair.rig, { scaleX: 1.02, scaleY: 0.98, duration: 0.3, ease: "sine.out", yoyo: true, repeat: 1 }, 33.4);
+            [0, 1, 2, 3, 4, 5, 6, 7].forEach((i) => {
+              const a = (i / 8) * Math.PI * 2, s = svg(burst, 60, 60, `left:${wx - 20}px;top:${wy - 40}px;width:40px;height:40px;opacity:0;transform-origin:20px 20px`, SHAPES.sparkle.replace("#bcd6ea", "#ffc15a"));
+              tl.fromTo(s, { opacity: 1, x: 0, y: 0, scale: 0.3 }, { opacity: 0, x: Math.cos(a) * 170, y: Math.sin(a) * 170 - 40, scale: 1.1, duration: 0.9, ease: "power2.out", immediateRender: false }, 34.2);
+            });
+            tl.to(pair.parts.flameWrap, { opacity: 1, duration: 0.15 }, 34.2);
+            tl.to(pair.parts.flameWrap, { scale: 1.4, duration: 0.35, ease: "back.out(3)" }, 34.2);
+            tl.to(pair.parts.flameWrap, { scale: 1, duration: 0.6, ease: "sine.inOut" }, 34.6);
+            tl.to(pair.glow, { opacity: 1, scale: 1, duration: 0.9, ease: "power2.out" }, 34.25);
+            flicker(pair.parts.flame, null, 34.6, 43.0, 57, 1.1);
+            // warmth floods back into the world
+            tl.to($("p5-e-cold"), { opacity: 0, duration: 2.4, ease: "power1.inOut" }, 34.3);
+            tl.to(sun, { opacity: 1, duration: 2.4, ease: "power1.inOut" }, 34.3);
+            pop(bFire, 35.0, 3.2);
+            hop(pair, 36.0, 34, 0.36);
+            pop(bPromise, 38.6, 3.4);
+            tl.fromTo(pair.rig, { rotation: -2 }, { rotation: 2, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 3, immediateRender: false }, 39.2);
+            tl.to(pair.rig, { rotation: 0, duration: 0.4 }, 41.2);
+            sparkles(c, 12, 59, 200, 1720, 80, 820, 35.0, 43.0);
+            cam(c, 35.0, 8.0, 960, 560, 1.05, "sine.inOut");
+          }
+
+          // ================================================================ F (42.6 – 52): best friends, forever
+          const FF = { z: 2.5, cx: 326, cy: 1345 };
+          {
+            const c = $("p5-f-cam");
+            el("div", "abs", c, "left:500px;top:-420px;width:1300px;height:1300px;border-radius:50%;background:radial-gradient(closest-side, rgba(255,232,170,0.9), rgba(255,210,140,0.35) 50%, rgba(255,210,140,0))");
+            meadow(c, 1030, 61, "#f4dfbf", "#e6c89e", "#f0cfa6");
+            const pair = place(c, "p5-f-pair", "pair-hands", FF, { glow: 160 });
+            const bAlways = placeBubble(c, "p5-f-bub-always", "bub-always", FF, "30% 100%");
+            const bForever = placeBubble(c, "p5-f-bub-forever", "bub-forever", FF, "25% 100%");
+            const hearts = [[900, 380], [1020, 300], [960, 460]].map(([x, y]) => svg(c, 60, 60, `left:${x}px;top:${y}px;opacity:0;transform-origin:30px 30px`, SHAPES.heart));
+            tl.fromTo($("p5-f-fade"), { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "power1.inOut" }, 42.6);
+            cam(c, 42.6, 0, 960, 560, 1.04);
+            cam(c, 43.0, 9.0, 960, 540, 1.0, "sine.inOut");
+            breathe(pair, 42.6, 52.0, 0.012, 1.2);
+            flicker(pair.parts.flame, pair.glow, 42.6, 52.0, 63, 1.0);
+            pop(bAlways, 43.6, 4.6);
+            pop(bForever, 46.2, 3.8);
+            // swinging their joined hands
+            tl.fromTo(pair.rig, { rotation: -1.8 }, { rotation: 1.8, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 9 }, 46.4);
+            hearts.forEach((h, i) => floatUp(h, 47.6 + i * 0.5, -180, i % 2 ? 24 : -18, 1.7));
+            sparkles(c, 10, 67, 150, 1770, 80, 900, 43.0, 52.0);
+          }
+
+          // ================================================================ G (51.6 – 64.6): "his name is HOPE"
+          const FG = { z: 2.5, cx: 869, cy: 1337.5 };
+          {
+            const c = $("p5-g-cam");
+            // the sun comes up behind the bridge; water shines under it
+            const sun = el("div", "abs", c, "left:660px;top:420px;width:600px;height:600px;border-radius:50%;background:radial-gradient(closest-side, #fff4c8 0%, #ffe39a 55%, rgba(255,214,140,0) 100%)");
+            svg(c, 1, 1, "left:0;top:0", `<path d="${ridge(2700, 860, 70, 620, 71, -800)}" fill="#f3c9a4"/><rect x="-800" y="880" width="3600" height="400" fill="#b9d7ea"/>
+              <path d="M-200 930 L2200 930" stroke="#e6f3fb" stroke-width="6" stroke-dasharray="80 60"/><path d="M-100 990 L2300 990" stroke="#e6f3fb" stroke-width="5" stroke-dasharray="120 90"/>`);
+            const shimmer = el("div", "abs", c, "left:0;top:0");
+            const r = rng(73);
+            for (let i = 0; i < 14; i++) {
+              const s = el("div", "abs", shimmer, `left:${100 + r() * 1700}px;top:${900 + r() * 150}px;width:${40 + r() * 90}px;height:5px;border-radius:3px;background:#f7fbff;opacity:0`);
+              tl.fromTo(s, { opacity: 0 }, { opacity: 0.9, duration: 0.8 + r(), ease: "sine.inOut", yoyo: true, repeat: 5 }, 51.6 + r() * 2);
+            }
+            const pair = place(c, "p5-g-pair", "pair-bridge", FG, { glow: 170, shadow: false });
+            const cap = placeLabel(c, "p5-g-cap", "cap-hope", FG);
+            const hopeGlow = el("div", "hope-glow", cap.root, `left:${(788 - 604) * FG.z - 230}px;top:${(1217 - 1133) * FG.z - 110}px;width:460px;height:220px;opacity:0`);
+            cap.root.insertBefore(hopeGlow, cap.root.querySelector("img"));
+            const hopeStars = [[-40, -30], [250, -40], [470, 10], [-70, 120], [500, 150]].map(([dx, dy]) =>
+              svg(cap.root, 60, 60, `left:${(742 - 604) * FG.z + dx}px;top:${(1200 - 1133) * FG.z + dy}px;width:40px;height:40px;opacity:0;transform-origin:20px 20px`, SHAPES.sparkle.replace("#bcd6ea", "#ffc15a")));
+            tl.fromTo($("p5-g-fade"), { opacity: 0 }, { opacity: 1, duration: 1.2, ease: "power1.inOut" }, 51.6);
+            tl.fromTo(sun, { y: 260 }, { y: 0, duration: 9.0, ease: "sine.out" }, 51.6);
+            cam(c, 51.6, 0, 925, 540, 1.0);
+            cam(c, 51.8, 11.6, 960, 540, 1.0, "sine.inOut");
+            breathe(pair, 51.6, 64.6, 0.01, 1.3);
+            flicker(pair.parts.flame, pair.glow, 51.6, 64.6, 75, 1.0);
+            dropLabel(cap, 52.9, -0.8, -50);
+            writeLines(cap, "cap-hope", [1133, 1197, 1241], 53.5, 2.0, 1.7);
+            tl.to(hopeGlow, { opacity: 1, duration: 1.2, ease: "power2.out" }, 55.6);
+            tl.fromTo(hopeGlow, { scale: 0.9 }, { scale: 1.08, duration: 1.4, ease: "sine.inOut", yoyo: true, repeat: 4, immediateRender: false }, 56.6);
+            hopeStars.forEach((s, i) => { for (let t = 55.8 + i * 0.25; t < 63.5; t += 1.9) twinkle(s, t, 1.0); });
+            sparkles(c, 16, 79, 150, 1770, 40, 860, 53.0, 64.6, 38);
+          }
+
+          // ================================================================ PAGE OUT (64.2 – 71.2)
+          {
+            const out = $("p5-pageout-out"), inner = $("p5-pageout-cam");
+            const pg = buildPage(inner, true);
+            pg.flames.forEach((fl, i) => flicker(fl, null, 64.2, 71.2, 700 + i, 0.9));
+            pageCam(inner, 64.2, 0, FG.cx, FG.cy, FG.z);
+            tl.fromTo($("p5-pageout-fade"), { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power1.inOut" }, 64.3);
+            pageCam(inner, 65.3, 3.0, 600, 800, 0.62, "power2.inOut");
+            tl.fromTo(out, { rotation: 0 }, { rotation: -0.8, duration: 3.0, ease: "power2.inOut" }, 65.3);
+          }
+
+          // ================================================================ END CARD (70.2 – 76.2)
+          {
+            const f = $("p5-end-card");
+            const k = 5, base = 768;
+            const w1 = el("div", "abs wipe", f, `left:405px;top:${base - 20.5 * k}px;width:${(260 - 176) * k}px;height:${(101 - 74) * k}px`);
+            img("assets/art/p1/t-anegg.svg", "spr", w1);
+            const amp = el("div", "amp", f, "left:868px;top:640px;opacity:0");
+            amp.textContent = "&";
+            const w2 = el("div", "abs wipe", f, `left:1015px;top:${base - 29 * k}px;width:${(1060 - 960) * k}px;height:${(298 - 262) * k}px`);
+            img("assets/art/p1/t-acandle.svg", "spr", w2);
+            const pair = actor(f, "p5-end-pair", "pair-hands", 1.15, 960, 600, { glow: 110 });
+            tl.fromTo($("p5-end-fade"), { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "power1.inOut" }, 70.2);
+            tl.fromTo(pair.root, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.9, ease: "power2.out" }, 70.8);
+            flicker(pair.parts.flame, pair.glow, 70.2, 76.2, 81, 1.0);
+            breathe(pair, 70.2, 76.2, 0.012, 1.2);
+            K.wipeIn(w1, 71.4, 0.95);
+            tl.fromTo(amp, { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(3)" }, 72.3);
+            K.wipeIn(w2, 72.5, 1.05);
+            tl.to($("p5-end-fade"), { opacity: 0, duration: 1.1, ease: "power1.in" }, 75.1);
+          }
+
+          window.__timelines["page5"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

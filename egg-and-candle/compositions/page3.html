@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="page3-template">
+      <style>
+        #p3-root { position: absolute; inset: 0; overflow: hidden; }
+        #p3-root .sky-gray { position: absolute; inset: 0; background: linear-gradient(180deg, #b7c4d4 0%, #d4dce7 50%, #e9edf2 100%); }
+        #p3-root .sky-dusk1 { position: absolute; inset: 0; background: linear-gradient(180deg, #b3b5d0 0%, #d3cadf 52%, #efe1e2 100%); }
+        #p3-root .sky-dusk2 { position: absolute; inset: 0; background: linear-gradient(180deg, #9ea1c2 0%, #c2b9d4 52%, #e3d4dc 100%); }
+        #p3-root .sky-dusk3 { position: absolute; inset: 0; background: linear-gradient(180deg, #7f86ab 0%, #a8a5c4 52%, #cfc3d3 100%); }
+        #p3-root .sky-night { position: absolute; inset: 0; background: linear-gradient(180deg, #37415f 0%, #5b6789 48%, #8f9bb6 100%); }
+        #p3-root .bar { position: absolute; left: 0; width: 1920px; height: 540px; background: #2b1d17; }
+        #p3-root .smoke { position: absolute; }
+      </style>
+
+      <div id="p3-root" class="ec" data-composition-id="page3" data-width="1920" data-height="1080" data-duration="65.2">
+        <!-- the ink page lands on page 2 and the camera pushes into the first panel -->
+        <div id="p3-pagein" class="set clip" data-start="0" data-duration="6" data-track-index="1">
+          <div class="desk" id="p3-desk" style="opacity: 0"></div>
+          <div class="layer" id="p3-prev-out" style="left: 960px; top: 540px; opacity: 0">
+            <div class="layer" id="p3-prev-cam"><div class="blank"></div></div>
+          </div>
+          <div class="layer" id="p3-pagein-out" style="left: 960px; top: 540px">
+            <div class="layer" id="p3-pagein-cam"></div>
+          </div>
+        </div>
+
+        <!-- A: "Wu Wu Wu Wu Wu" -->
+        <div id="p3-a" class="set clip" data-start="4.3" data-duration="6.1" data-track-index="2">
+          <div class="fade" id="p3-a-fade">
+            <div class="sky-gray"></div>
+            <div class="layer" id="p3-a-cam"></div>
+            <div class="screen" id="p3-a-snow"></div>
+          </div>
+        </div>
+
+        <!-- B: two close-ups of the face, letterboxed like the drawn strips -->
+        <div id="p3-b1" class="set clip" data-start="9.8" data-duration="3.7" data-track-index="3">
+          <div class="fade" id="p3-b1-fade">
+            <div class="sky-gray"></div>
+            <div class="layer" id="p3-b1-cam"></div>
+          </div>
+        </div>
+        <div id="p3-b2" class="set clip" data-start="13.4" data-duration="3.6" data-track-index="4">
+          <div class="fade" id="p3-b2-fade">
+            <div class="sky-gray"></div>
+            <div class="layer" id="p3-b2-cam"></div>
+          </div>
+        </div>
+        <div id="p3-bars" class="set clip" data-start="9.7" data-duration="7.9" data-track-index="5">
+          <div class="bar" id="p3-bar-top" style="top: 0; transform-origin: 50% 0%; transform: scaleY(0)"></div>
+          <div class="bar" id="p3-bar-bot" style="top: 540px; transform-origin: 50% 100%; transform: scaleY(0)"></div>
+        </div>
+
+        <!-- C: "Let's go play!" / "NO!" -->
+        <div id="p3-c" class="set clip" data-start="16.4" data-duration="8" data-track-index="6">
+          <div class="fade" id="p3-c-fade">
+            <div class="sky-gray"></div>
+            <div class="layer" id="p3-c-cam"></div>
+            <div class="screen" id="p3-c-snow"></div>
+          </div>
+        </div>
+
+        <!-- D: "You do not bother me!" -->
+        <div id="p3-d" class="set clip" data-start="24" data-duration="6.8" data-track-index="7">
+          <div class="fade" id="p3-d-fade">
+            <div class="sky-gray"></div>
+            <div class="layer" id="p3-d-shake"><div class="layer" id="p3-d-cam"></div></div>
+            <div class="screen" id="p3-d-snow"></div>
+          </div>
+        </div>
+
+        <!-- E: "Get out!" -->
+        <div id="p3-e" class="set clip" data-start="30.4" data-duration="5" data-track-index="8">
+          <div class="fade" id="p3-e-fade">
+            <div class="sky-dusk1"></div>
+            <div class="layer" id="p3-e-shake"><div class="layer" id="p3-e-cam"></div></div>
+          </div>
+        </div>
+
+        <!-- F: "That day," -->
+        <div id="p3-f" class="set clip" data-start="35" data-duration="4.4" data-track-index="9">
+          <div class="fade" id="p3-f-fade">
+            <div class="sky-dusk1"></div>
+            <div class="layer" id="p3-f-cam"></div>
+          </div>
+        </div>
+
+        <!-- G: "I look at him." -->
+        <div id="p3-g" class="set clip" data-start="39" data-duration="4.6" data-track-index="10">
+          <div class="fade" id="p3-g-fade">
+            <div class="sky-dusk2"></div>
+            <div class="layer" id="p3-g-cam"></div>
+          </div>
+        </div>
+
+        <!-- H: "More and more far from me…" -->
+        <div id="p3-h" class="set clip" data-start="43.2" data-duration="6.4" data-track-index="11">
+          <div class="fade" id="p3-h-fade">
+            <div class="sky-dusk3"></div>
+            <div class="layer" id="p3-h-cam"></div>
+          </div>
+        </div>
+
+        <!-- I: "Alas…" and the caption; the distant light goes out -->
+        <div id="p3-i" class="set clip" data-start="48.2" data-duration="12.2" data-track-index="12">
+          <div class="fade" id="p3-i-fade">
+            <div class="sky-night"></div>
+            <div class="layer" id="p3-i-cam"></div>
+            <div class="screen" id="p3-i-snow"></div>
+          </div>
+        </div>
+
+        <!-- the page again, in color; ends centred for page 4 -->
+        <div id="p3-pageout" class="set clip" data-start="59.2" data-duration="6" data-track-index="13">
+          <div class="fade" id="p3-pageout-fade">
+            <div class="layer" id="p3-pageout-out" style="left: 960px; top: 540px">
+              <div class="layer" id="p3-pageout-cam"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (() => {
+          const ART = {
+            wu: { b: [116, 18, 352, 60] },
+            "egg-cry": { b: [154, 46, 358, 304] },
+            "face-well": { b: [658, 8, 912, 166] },
+            "face-cry": { b: [651, 167, 901, 314], p: { tearL: { b: [721, 204, 741, 262], pv: [731, 204] }, tearR: { b: [786, 204, 806, 262], pv: [796, 204] } } },
+            "bub-no": { b: [124, 327, 213, 415] },
+            "egg-back": { b: [152, 384, 386, 676] },
+            "bub-play": { b: [314, 320, 452, 444] },
+            "candle-play": { b: [419, 320, 584, 673], p: { flame: { b: [486, 326, 522, 390] } } },
+            "bub-bother": { b: [656, 312, 994, 416] },
+            "egg-angry": { b: [648, 410, 888, 682] },
+            "candle-shock": { b: [952, 360, 1140, 682], p: { flame: { b: [1048, 366, 1092, 433] } } },
+            "bub-getout": { b: [142, 703, 332, 816] },
+            "candle-sad": { b: [162, 800, 318, 1088], p: { flame: { b: [236, 809, 268, 843] } } },
+            "cap-day": { b: [391, 710, 536, 770] },
+            "candle-turn": { b: [420, 792, 574, 1080], p: { flame: { b: [500, 798, 530, 840] } } },
+            "cap-look": { b: [652, 722, 860, 774] },
+            "candle-back": { b: [688, 782, 832, 1074], p: { flame: { b: [752, 788, 785, 830] } } },
+            "cap-far": { b: [924, 715, 1168, 797] },
+            "candle-far": { b: [982, 797, 1088, 1024], p: { flame: { b: [1018, 803, 1052, 842] } } },
+            "egg-alas": { b: [140, 1144, 422, 1468] },
+            "bub-alas": { b: [381, 1133, 497, 1279] },
+            "cap-gone": { b: [620, 1126, 1000, 1412] },
+          };
+          const PANELS = {
+            p3a: [[113, 14], [381, 14], [381, 310], [113, 311]],
+            p3b: [[381, 14], [1190, 14], [1190, 152], [381, 168]],
+            p3b2: [[381, 168], [1190, 152], [1190, 300], [381, 308]],
+            p3c: [[113, 311], [643, 306], [643, 703], [113, 703]],
+            p3d: [[643, 306], [1190, 300], [1190, 707], [643, 703]],
+            p3e: [[107, 703], [373, 703], [373, 1092], [107, 1090]],
+            p3f: [[373, 703], [633, 704], [633, 1096], [373, 1092]],
+            p3g: [[633, 704], [911, 705], [911, 1100], [633, 1096]],
+            p3h: [[911, 705], [1190, 708], [1190, 1105], [911, 1100]],
+            p3i: [[100, 1094], [1177, 1111], [1170, 1511], [100, 1478]],
+          };
+          const WASH = {
+            p3a: ["#cdd7e3", "#eef1f5"], p3b: ["#d3dce7", "#eef1f5"], p3b2: ["#d3dce7", "#eef1f5"], p3c: ["#cdd7e3", "#eef1f5"], p3d: ["#cdd7e3", "#eef1f5"],
+            p3e: ["#d3cfe2", "#efe6ec"], p3f: ["#cdc9df", "#ece3ea"], p3g: ["#c3c1db", "#e5dde9"], p3h: ["#b5b6d4", "#ddd7e6"], p3i: ["#8e9bbb", "#cdd4e3"],
+          };
+
+          const tl = gsap.timeline({ paused: true });
+          const $ = (id) => document.getElementById(id);
+          const { rng, el, svg, SHAPES, ridge, pine } = EC;
+          const K = EC.kit(tl, { page: 3, ART, PANELS, WASH });
+          const { actor, bubble, label, art, buildPage, pageCam, cam, flicker, breathe, hop, waddle, tremble, pop, dropLabel, twinkle, wipeIn, snow, tears, shake, dimFlame } = K;
+
+          // panel-fit framing: a panel's page coordinates -> world (= screen at camera 1x)
+          const frame = (x0, y0, x1, y1, z) => ({ z: z || Math.min(1920 / (x1 - x0), 1080 / (y1 - y0)), cx: (x0 + x1) / 2, cy: (y0 + y1) / 2 });
+          const S = (F, px, py) => [960 + F.z * (px - F.cx), 540 + F.z * (py - F.cy)];
+          const place = (parent, id, name, F, opt) => { const [x0, , x1, y1] = ART[name].b; const [x, y] = S(F, (x0 + x1) / 2, y1); return actor(parent, id, name, F.z, x, y, opt); };
+          const placeBubble = (parent, id, name, F, origin) => { const [x0, y0] = ART[name].b; const [x, y] = S(F, x0, y0); return bubble(parent, id, name, F.z, x, y, origin); };
+          const placeLabel = (parent, id, name, F) => { const [x0, y0] = ART[name].b; const [x, y] = S(F, x0, y0); return label(parent, id, name, F.z, x, y); };
+          const placeArt = (parent, id, name, F, css) => { const [x0, y0] = ART[name].b; const [x, y] = S(F, x0, y0); return art(parent, id, name, F.z, x, y, css); };
+
+          // snowfield behind a panel, in one of the evening palettes
+          const PAL = {
+            gray: { hill: "#d2dae5", pine: ["#8ea5a6", "#9ab1b0"], cap: "#f4f7fa", ground: "#f3f6f9", edge: "#d8e0e9" },
+            dusk1: { hill: "#d6cfe0", pine: ["#9493b3", "#a09fbd"], cap: "#f1eef6", ground: "#f1eff5", edge: "#dcd8e6" },
+            dusk2: { hill: "#c7c0d6", pine: ["#8584a6", "#9190b0"], cap: "#e9e6f1", ground: "#e9e7f0", edge: "#d2cedf" },
+            dusk3: { hill: "#b2aec8", pine: ["#72739a", "#7e7fa5"], cap: "#dcdbea", ground: "#dfdfeb", edge: "#c6c4d9" },
+            night: { hill: "#56617f", pine: ["#3f4966", "#46506f"], cap: "#b9c3d6", ground: "#cfd7e5", edge: "#b3bed2" },
+          };
+          function field(camEl, groundY, seed, pal, x0 = -900, x1 = 2900, gap = null) {
+            const P = PAL[pal], r = rng(seed);
+            let pines = "";
+            for (let x = x0; x < x1; x += 170 + r() * 90) {
+              const y = groundY - 70 + r() * 20, h = 110 + r() * 120, col = P.pine[Math.floor(r() * 2)];
+              if (!gap || x < gap[0] || x > gap[1]) pines += pine(x, y, h, col, P.cap);
+            }
+            svg(camEl, 1, 1, "left:0;top:0", `<path d="${ridge(x1, groundY - 130, 120, 540, seed + 1, x0)}" fill="${P.hill}"/>${pines}<path d="${ridge(x1, groundY, 50, 480, seed + 2, x0)}" fill="${P.ground}"/><path d="${ridge(x1, groundY, 50, 480, seed + 2, x0)}" fill="none" stroke="${P.edge}" stroke-width="14"/>`);
+          }
+          // slide the next panel in from the right, like turning to the next frame
+          function push(oldFade, newFade, t, dur = 0.5) {
+            newFade.style.overflow = "hidden";
+            const gutter = el("div", "abs", newFade, "left:0;top:0;width:30px;height:1080px;background:#fbf7ee;border-right:6px solid #2b1d17;box-sizing:border-box");
+            tl.fromTo(newFade, { x: 1950 }, { x: 0, duration: dur, ease: "power3.inOut" }, t);
+            tl.to(oldFade, { x: -700, duration: dur, ease: "power3.inOut" }, t);
+            tl.fromTo(gutter, { opacity: 1 }, { opacity: 0, duration: 0.2 }, t + dur - 0.1);
+          }
+          // sobbing: short squash pulses on the rig
+          function sob(a, t0, t1, period = 0.8, depth = 0.05) {
+            for (let t = t0; t < t1 - 0.4; t += period) {
+              tl.to(a.rig, { scaleY: 1 - depth, scaleX: 1 + depth * 0.6, duration: 0.12, ease: "power2.out" }, t);
+              tl.to(a.rig, { scaleY: 1, scaleX: 1, duration: 0.35, ease: "sine.inOut" }, t + 0.12);
+            }
+          }
+          const lightSnow = (layer, seed, t0, t1) => snow(layer, 34, seed, t0, t1, { size: [5, 12], speed: [60, 110], drift: 30, alpha: 0.85 });
+
+          // ================================================================ PAGE IN (0 – 6)
+          const FA = { z: 3.2, cx: 256, cy: 170 };
+          {
+            // page 2 lies on the desk underneath (blank sheet at its final pose) once its slot ends
+            tl.set($("p3-prev-cam"), { x: -0.62 * 600, y: -0.62 * 800, scale: 0.62 }, 0);
+            tl.set($("p3-prev-out"), { rotation: 1.0 }, 0);
+            tl.set([$("p3-desk"), $("p3-prev-out")], { opacity: 1 }, 1.45);
+            const out = $("p3-pagein-out"), inner = $("p3-pagein-cam");
+            const pg = buildPage(inner, false, ["egg-cry", "wu"], [256, 170]);
+            pageCam(inner, 0, 0, 600, 800, 0.62);
+            tl.fromTo(out, { y: 1000, rotation: -7 }, { y: 0, rotation: -1.0, duration: 1.25, ease: "power3.out" }, 0.05);
+            pageCam(inner, 1.9, 2.5, FA.cx, FA.cy, FA.z);
+            tl.to(out, { rotation: 0, duration: 2.5, ease: "power2.inOut" }, 1.9);
+            tl.fromTo(pg.group, { "--r": "0%" }, { "--r": "140%", duration: 1.3, ease: "power1.inOut" }, 3.4);
+            tl.to(pg.washes.p3a, { opacity: 1, duration: 1.0, ease: "power1.inOut" }, 3.7);
+          }
+
+          // ================================================================ A (4.3 – 10.4): crying alone
+          {
+            const c = $("p3-a-cam");
+            field(c, 955, 11, "gray");
+            const wu = placeArt(c, "p3-a-wu", "wu", FA, "clip-path:inset(0 100% 0 0)");
+            const egg = place(c, "p3-a-egg", "egg-cry", FA);
+            tl.fromTo($("p3-a-fade"), { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power1.inOut" }, 4.5);
+            lightSnow($("p3-a-snow"), 13, 4.3, 10.4);
+            cam(c, 4.3, 0, 960, 540, 1);
+            cam(c, 5.0, 5.4, 960, 520, 1.08, "sine.inOut");
+            // the sobs come in the rhythm of the lettering
+            wipeIn(wu, 4.6, 2.0, "steps(5)");
+            tl.fromTo(wu, { y: 0 }, { y: -9, duration: 0.2, ease: "sine.out", yoyo: true, repeat: 19 }, 4.6);
+            breathe(egg, 4.3, 10.4, 0.012, 1.0);
+            tremble(egg, 4.6, 10.2, 1.8, 0.06);
+            sob(egg, 4.6, 10.4, 0.4, 0.04);
+            tears(egg, [[225, 168], [290, 166]], 5.0, 10.4, 7, 28, 150);
+          }
+
+          // ================================================================ B (9.8 – 17): the close-ups, and a blink between them
+          const FB1 = { z: 4.2, cx: 784, cy: 88 }, FB2 = { z: 4.2, cx: 776, cy: 240 };
+          {
+            const top = $("p3-bar-top"), bot = $("p3-bar-bot");
+            // letterbox closes in on the face
+            tl.fromTo(top, { scaleY: 0 }, { scaleY: 258 / 540, duration: 0.55, ease: "power2.inOut" }, 9.75);
+            tl.fromTo(bot, { scaleY: 0 }, { scaleY: 268 / 540, duration: 0.55, ease: "power2.inOut" }, 9.75);
+            tl.fromTo($("p3-b1-fade"), { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power1.inOut" }, 9.85);
+
+            const c1 = $("p3-b1-cam");
+            const f1 = place(c1, "p3-b1-face", "face-well", FB1, { shadow: false });
+            cam(c1, 9.8, 0, 960, 540, 1);
+            cam(c1, 9.9, 3.6, 960, 540, 1.07, "sine.inOut");
+            tremble(f1, 10.3, 13.4, 1.4, 0.07);
+            // eyes welling up: glints shimmer
+            [[737, 80], [812, 76]].forEach(([px, py], i) => {
+              const [x, y] = S(FB1, px, py);
+              const s = svg(c1, 60, 60, `left:${x - 28}px;top:${y - 28}px;width:56px;height:56px;opacity:0;transform-origin:28px 28px`, SHAPES.sparkle);
+              for (let t = 10.4 + i * 0.35; t < 13.1; t += 0.95) twinkle(s, t, 0.7);
+            });
+
+            // blink: the bars meet, and open on the tears
+            tl.to([top, bot], { scaleY: 1, duration: 0.2, ease: "power2.in" }, 13.25);
+            tl.to(top, { scaleY: 258 / 540, duration: 0.3, ease: "power2.out" }, 13.5);
+            tl.to(bot, { scaleY: 268 / 540, duration: 0.3, ease: "power2.out" }, 13.5);
+
+            const c2 = $("p3-b2-cam");
+            const f2 = place(c2, "p3-b2-face", "face-cry", FB2, { shadow: false });
+            cam(c2, 13.4, 0, 960, 540, 1);
+            cam(c2, 13.5, 3.5, 960, 560, 1.06, "sine.inOut");
+            const { tearL, tearR } = f2.parts;
+            tl.fromTo(tearL, { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: "power1.in" }, 13.75);
+            tl.fromTo(tearR, { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: "power1.in" }, 13.95);
+            tears(f2, [[731, 255], [796, 254]], 14.4, 17.0, 9, 44, 220);
+            tremble(f2, 13.6, 16.9, 2.2, 0.06);
+
+            // the letterbox opens onto the next panel
+            tl.to(top, { scaleY: 0, duration: 0.55, ease: "power2.inOut" }, 17.0);
+            tl.to(bot, { scaleY: 0, duration: 0.55, ease: "power2.inOut" }, 17.0);
+          }
+
+          // ================================================================ C (16.4 – 24.4): "Let's go play!" / "NO!"
+          const FC = { z: 2.6, cx: 378, cy: 507 };
+          {
+            const c = $("p3-c-cam");
+            field(c, 950, 21, "gray");
+            const egg = place(c, "p3-c-egg", "egg-back", FC);
+            const cdl = place(c, "p3-c-candle", "candle-play", FC, { glow: 170 });
+            const aura = el("div", "glow", cdl.root, "left:-360px;top:-260px;width:1100px;height:1100px;background:radial-gradient(closest-side, rgba(255,205,130,0.5), rgba(255,185,110,0.16) 55%, rgba(255,185,110,0));mix-blend-mode:normal");
+            cdl.root.insertBefore(aura, cdl.root.firstChild);
+            const bPlay = placeBubble(c, "p3-c-bub-play", "bub-play", FC, "85% 100%");
+            const bNo = placeBubble(c, "p3-c-bub-no", "bub-no", FC, "60% 100%");
+            tl.fromTo($("p3-c-fade"), { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power1.inOut" }, 16.4);
+            lightSnow($("p3-c-snow"), 23, 16.4, 24.4);
+            cam(c, 16.4, 0, 960, 540, 1);
+            cam(c, 17.0, 7.4, 1000, 560, 1.05, "sine.inOut");
+            breathe(egg, 16.4, 24.4, 0.01, 1.1);
+            sob(egg, 16.6, 20.8, 0.9, 0.035);
+            // the candle hurries in, all warmth
+            tl.fromTo(cdl.root, { x: 900 }, { x: 0, duration: 1.4, ease: "power2.out" }, 16.8);
+            waddle(cdl, 16.8, 18.2, 0.24, 10, 3);
+            flicker(cdl.parts.flame, cdl.glow, 16.4, 24.4, 31, 1.1);
+            tl.fromTo(aura, { scale: 0.95, opacity: 0.85 }, { scale: 1.05, opacity: 1, duration: 1.3, ease: "sine.inOut", yoyo: true, repeat: 5 }, 16.4);
+            hop(cdl, 18.45, 50, 0.36);
+            pop(bPlay, 18.8, 2.5);
+            tl.to(bPlay, { scale: 1.08, duration: 0.15, ease: "power2.out", yoyo: true, repeat: 1 }, 19.4);
+            // "NO!" — a jolt through the egg
+            tl.to(egg.rig, { scaleY: 1.08, scaleX: 0.95, duration: 0.1, ease: "power2.out" }, 21.0);
+            tl.to(egg.rig, { scaleY: 1, scaleX: 1, duration: 0.5, ease: "elastic.out(1, 0.4)" }, 21.1);
+            pop(bNo, 21.05, 2.8);
+            tl.fromTo(bNo, { x: -6 }, { x: 6, duration: 0.05, ease: "none", yoyo: true, repeat: 7, immediateRender: false }, 21.2);
+            tremble(egg, 21.2, 23.8, 2.2, 0.05);
+            // the flame flinches, the candle leans back
+            tl.to(cdl.parts.flameWrap, { scaleY: 0.6, scaleX: 1.15, duration: 0.12, ease: "power2.out" }, 21.1);
+            tl.to(cdl.parts.flameWrap, { scaleY: 1, scaleX: 1, duration: 0.6, ease: "sine.inOut" }, 21.35);
+            tl.to(cdl.rig, { rotation: 5, duration: 0.25, ease: "power2.out" }, 21.1);
+            tl.to(cdl.rig, { rotation: 0, duration: 0.8, ease: "sine.inOut" }, 22.4);
+          }
+
+          // ================================================================ D (24 – 30.8): "You do not bother me!"
+          const FD = { z: 2.6, cx: 916, cy: 507 };
+          {
+            const c = $("p3-d-cam");
+            field(c, 965, 41, "gray");
+            const egg = place(c, "p3-d-egg", "egg-angry", FD);
+            const cdl = place(c, "p3-d-candle", "candle-shock", FD, { glow: 160 });
+            const bBother = placeBubble(c, "p3-d-bub-bother", "bub-bother", FD, "10% 100%");
+            push($("p3-c-fade"), $("p3-d-fade"), 24.0);
+            lightSnow($("p3-d-snow"), 43, 24.0, 30.8);
+            cam(c, 24.0, 0, 960, 540, 1);
+            cam(c, 24.6, 6.0, 975, 550, 1.04, "sine.inOut");
+            // the egg rounds on the candle
+            tl.fromTo(egg.rig, { scaleX: 0.86, scaleY: 1.06 }, { scaleX: 1, scaleY: 1, duration: 0.5, ease: "back.out(3)" }, 24.5);
+            breathe(egg, 24.0, 30.8, 0.012, 0.9);
+            [25.05, 25.45].forEach((t) => hop(egg, t, 22, 0.24, 0.14));
+            pop(bBother, 25.1, 3.9);
+            shake($("p3-d-shake"), 25.15, 0.35, 12, 7);
+            tl.fromTo(bBother, { rotation: -2 }, { rotation: 2, duration: 0.07, ease: "none", yoyo: true, repeat: 9, immediateRender: false }, 25.5);
+            tremble(egg, 26.0, 29.6, 3, 0.045);
+            // the candle, stunned
+            flicker(cdl.parts.flame, cdl.glow, 24.0, 30.8, 47, 1.0);
+            tl.to(cdl.root, { x: 70, duration: 0.3, ease: "power2.out" }, 25.25);
+            hop(cdl, 25.2, 38, 0.3, 0.16);
+            tl.to(cdl.parts.flameWrap, { scaleY: 1.45, duration: 0.14, ease: "power2.out" }, 25.25);
+            tl.to(cdl.parts.flameWrap, { scaleY: 0.85, scaleX: 0.95, duration: 0.6, ease: "sine.inOut" }, 25.45);
+            tremble(cdl, 25.7, 27.2, 2.5, 0.05);
+            breathe(cdl, 27.2, 30.8, 0.01, 1.2);
+          }
+
+          // ================================================================ E (30.4 – 35.4): "Get out!"
+          const FE = { z: 2.6, cx: 240, cy: 900 };
+          {
+            const c = $("p3-e-cam");
+            field(c, 1000, 51, "dusk1");
+            const cdl = place(c, "p3-e-candle", "candle-sad", FE, { glow: 150 });
+            const bOut = placeBubble(c, "p3-e-bub-out", "bub-getout", FE, "50% 100%");
+            push($("p3-d-fade"), $("p3-e-fade"), 30.4);
+            cam(c, 30.4, 0, 960, 540, 1);
+            flicker(cdl.parts.flame, cdl.glow, 30.4, 35.4, 53, 0.9);
+            tl.fromTo(bOut, { opacity: 0, scale: 0.15, rotation: -10 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.35, ease: "back.out(3.2)" }, 30.9);
+            shake($("p3-e-shake"), 30.95, 0.45, 20, 9);
+            tl.to(bOut, { opacity: 0, scale: 0.9, duration: 0.3, ease: "power1.in" }, 33.6);
+            // it takes the blow
+            tl.to(cdl.rig, { scaleY: 0.9, scaleX: 1.06, duration: 0.12, ease: "power2.out" }, 30.95);
+            tl.to(cdl.rig, { scaleY: 0.97, scaleX: 1.01, duration: 0.5, ease: "sine.out" }, 31.07);
+            tremble(cdl, 31.2, 32.6, 2, 0.06);
+            dimFlame(cdl, 32.2, 2.2, 0.72);
+            cam(c, 33.8, 1.6, 960, 600, 1.08, "sine.inOut");
+          }
+
+          // ================================================================ F (35 – 39.4): "That day,"
+          const FF = { z: 2.6, cx: 503, cy: 900 };
+          {
+            const c = $("p3-f-cam");
+            field(c, 985, 61, "dusk1");
+            const lab = placeLabel(c, "p3-f-lab", "cap-day", FF);
+            const cdl = place(c, "p3-f-candle", "candle-turn", FF, { glow: 140 });
+            push($("p3-e-fade"), $("p3-f-fade"), 35.0);
+            cam(c, 35.0, 0, 960, 540, 1);
+            dropLabel(lab, 35.5, -1.5, -50);
+            flicker(cdl.parts.flame, cdl.glow, 35.0, 39.4, 67, 0.8);
+            dimFlame(cdl, 35.0, 0, 0.7);
+            breathe(cdl, 35.0, 39.4, 0.012, 1.4);
+            // a sigh, then he turns to go
+            tl.to(cdl.rig, { scaleY: 0.95, scaleX: 1.02, rotation: -2, duration: 0.9, ease: "sine.inOut" }, 36.2);
+            tl.to(cdl.rig, { scaleY: 1, scaleX: 1, rotation: 0, duration: 0.7, ease: "sine.inOut" }, 37.3);
+            tl.to(cdl.root, { x: 170, duration: 1.6, ease: "sine.in" }, 37.8);
+            waddle(cdl, 37.8, 39.4, 0.4, 7, 2);
+          }
+
+          // ================================================================ G (39 – 43.6): "I look at him."
+          const FG = { z: 2.6, cx: 772, cy: 902 };
+          {
+            const c = $("p3-g-cam");
+            field(c, 965, 71, "dusk2");
+            const lab = placeLabel(c, "p3-g-lab", "cap-look", FG);
+            const cdl = place(c, "p3-g-candle", "candle-back", FG, { glow: 140 });
+            push($("p3-f-fade"), $("p3-g-fade"), 39.0);
+            cam(c, 39.0, 0, 960, 540, 1);
+            dropLabel(lab, 39.5, 1.2, -50);
+            flicker(cdl.parts.flame, cdl.glow, 39.0, 43.6, 73, 0.7);
+            dimFlame(cdl, 39.0, 0, 0.66);
+            dimFlame(cdl, 40.0, 3.4, 0.55);
+            // walking away into the distance
+            cdl.root.style.transformOrigin = "50% 100%";
+            tl.to(cdl.root, { scale: 0.72, y: -80, duration: 4.4, ease: "none" }, 39.2);
+            waddle(cdl, 39.2, 43.6, 0.44, 7, 2.2);
+          }
+
+          // ================================================================ H (43.2 – 49): "More and more far from me…"
+          const FH = { z: 2.6, cx: 1050, cy: 905 };
+          {
+            const c = $("p3-h-cam");
+            field(c, 840, 81, "dusk3");
+            const lab = placeLabel(c, "p3-h-lab", "cap-far", FH);
+            const cdl = place(c, "p3-h-candle", "candle-far", FH, { glow: 130 });
+            push($("p3-g-fade"), $("p3-h-fade"), 43.2);
+            cam(c, 43.2, 0, 960, 540, 1);
+            dropLabel(lab, 43.7, -1, -50);
+            flicker(cdl.parts.flame, cdl.glow, 43.2, 49.0, 83, 0.6);
+            dimFlame(cdl, 43.2, 0, 0.55);
+            dimFlame(cdl, 44.0, 4.6, 0.22);
+            cdl.root.style.transformOrigin = "50% 100%";
+            tl.to(cdl.root, { scale: 0.42, y: -70, duration: 5.4, ease: "sine.out" }, 43.4);
+            waddle(cdl, 43.4, 48.6, 0.46, 6, 2);
+            tl.to(cdl.root, { opacity: 0, duration: 1.2, ease: "power1.in" }, 47.6);
+            cam(c, 44.4, 4.6, 960, 520, 1.06, "sine.inOut");
+          }
+
+          // ================================================================ I (48.2 – 59.8): "Alas…", the caption, the light goes out
+          const FI = frame(100, 1094, 1177, 1511);
+          {
+            const c = $("p3-i-cam");
+            // stars, far hills, the lonely snowfield
+            const r = rng(91);
+            const stars = [];
+            for (let i = 0; i < 22; i++) {
+              const s = svg(c, 60, 60, `left:${-200 + r() * 2300}px;top:${-60 + r() * 520}px;width:${14 + r() * 16}px;height:${14 + r() * 16}px;opacity:0;transform-origin:50% 50%`, SHAPES.sparkle.replace("#bcd6ea", "#8f9ec0"));
+              stars.push(s);
+            }
+            field(c, 820, 93, "night", -1100, 3100, [690, 910]);
+            el("div", "abs", c, "left:-400px;top:260px;width:1500px;height:1000px;border-radius:50%;background:radial-gradient(closest-side, rgba(214,224,246,0.35), rgba(214,224,246,0))");
+            // the far-off light on the horizon, and its last curl of smoke
+            const [lx, ly] = [800, 648];
+            const halo = el("div", "glow", c, `left:${lx - 70}px;top:${ly - 70}px;width:140px;height:140px;background:radial-gradient(circle, rgba(255,214,120,0.95) 0%, rgba(255,170,80,0.4) 35%, rgba(255,150,70,0) 70%);mix-blend-mode:normal`);
+            const dot = el("div", "abs", c, `left:${lx - 6}px;top:${ly - 10}px;width:12px;height:16px;border-radius:50% 50% 45% 45%;background:#ffe27a`);
+            const smoke = svg(c, 60, 140, `left:${lx - 30}px;top:${ly - 150}px;opacity:0`, '<path d="M30 136 C 18 118 44 104 30 86 C 16 68 42 54 30 36 C 22 24 30 12 36 4" fill="none" stroke="#d6dcea" stroke-width="7" stroke-linecap="round"/>');
+            smoke.classList.add("smoke");
+            const egg = place(c, "p3-i-egg", "egg-alas", FI);
+            const think = placeArt(c, "p3-i-think", "bub-alas", FI, "clip-path:inset(100% 0% 0% 0%);transform-origin:0% 100%");
+            const cap = placeLabel(c, "p3-i-cap", "cap-gone", FI);
+            // the caption card, written out line by line
+            const capImg = cap.root.querySelector("img");
+            capImg.style.opacity = "0";
+            const B = [1126, 1193.5, 1235, 1278, 1327, 1412], H = 1412 - 1126;
+            const lines = B.slice(1).map((b, i) => {
+              const n = EC.img(K.SRC("cap-gone"), "spr", cap.root, `clip-path:inset(${(((B[i] - 1126) / H) * 100).toFixed(2)}% 100% ${(((1412 - b) / H) * 100).toFixed(2)}% 0%)`);
+              cap.root.insertBefore(n, cap.tape);
+              return { n, top: (((B[i] - 1126) / H) * 100).toFixed(2), bot: (((1412 - b) / H) * 100).toFixed(2) };
+            });
+
+            tl.fromTo($("p3-i-fade"), { opacity: 0 }, { opacity: 1, duration: 1.2, ease: "power1.inOut" }, 48.2);
+            snow($("p3-i-snow"), 24, 97, 48.2, 59.8, { size: [4, 10], speed: [45, 80], drift: 25, alpha: 0.7 });
+            stars.forEach((s, i) => {
+              for (let t = 48.4 + (i % 7) * 0.45; t < 59.4; t += 2.6 + (i % 3) * 0.7) twinkle(s, t, 1.4);
+            });
+            cam(c, 48.2, 0, 560, 560, 1.4);
+            cam(c, 48.4, 2.6, 560, 545, 1.46, "sine.inOut");
+            breathe(egg, 48.2, 59.8, 0.012, 1.5);
+            flicker(dot, halo, 48.2, 57.6, 99, 0.5);
+            // "Alas…": the little circles rise, then the thought
+            [[88, 49.3], [76, 49.6], [61, 49.9], [0, 50.25]].forEach(([p, t]) => tl.set(think, { clipPath: `inset(${p}% 0% 0% 0%)` }, t));
+            tl.fromTo(think, { scale: 0.94 }, { scale: 1, duration: 0.45, ease: "back.out(3)" }, 50.25);
+            tl.to(egg.rig, { scaleY: 0.97, scaleX: 1.015, duration: 1.2, ease: "sine.inOut" }, 50.3);
+            // back out to the whole panel
+            cam(c, 51.4, 2.2, 960, 540, 1, "power2.inOut");
+            tl.to(think, { opacity: 0, duration: 0.6 }, 53.4);
+            dropLabel(cap, 52.9, 0.8, -50);
+            lines.forEach((ln, i) => {
+              tl.to(ln.n, { clipPath: `inset(${ln.top}% 0% ${ln.bot}% 0%)`, duration: 0.95, ease: "power1.inOut" }, 53.6 + i * 1.02);
+            });
+            // "Until go out……" — the far light shrinks away and is gone
+            tl.to(dot, { scale: 0.2, opacity: 0, duration: 1.4, ease: "power1.in" }, 57.7);
+            tl.to(halo, { scale: 0.3, opacity: 0, duration: 1.4, ease: "power1.in" }, 57.7);
+            tl.fromTo(smoke, { opacity: 0, y: 0, scaleX: 0.6 }, { opacity: 0.8, y: -20, scaleX: 1, duration: 0.9, ease: "sine.out" }, 58.6);
+            tl.to(smoke, { opacity: 0, y: -60, duration: 1.2, ease: "sine.in" }, 59.5);
+            tl.fromTo($("p3-i-fade"), { filter: "saturate(1) brightness(1)" }, { filter: "saturate(0.35) brightness(0.9)", duration: 1.6, ease: "power1.inOut", immediateRender: false }, 58.2);
+          }
+
+          // ================================================================ PAGE OUT (59.2 – 65.2)
+          {
+            const out = $("p3-pageout-out"), inner = $("p3-pageout-cam");
+            const pg = buildPage(inner, true);
+            pg.flames.forEach((fl, i) => flicker(fl, null, 59.2, 65.2, 500 + i, 0.8));
+            pageCam(inner, 59.2, 0, FI.cx, FI.cy, FI.z);
+            tl.fromTo($("p3-pageout-fade"), { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power1.inOut" }, 59.3);
+            pageCam(inner, 60.2, 2.7, 600, 800, 0.62, "power2.inOut");
+            tl.fromTo(out, { rotation: 0 }, { rotation: -1.0, duration: 2.7, ease: "power2.inOut" }, 60.2);
+          }
+
+          window.__timelines["page3"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>
