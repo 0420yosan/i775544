@@ -1,13 +1,16 @@
-"""Original score + sound effects for page 1, synthesized from scratch.
+"""Original score + sound effects for the whole film, synthesized from scratch.
 
-100 bpm, F major. Bars (2.4 s each) follow the picture:
-  0-1 title / page arrives · 2-7 theme A (egg & candle) · 8 snow comes ·
-  9-12 winter theme · 13-14 "Really?" pizzicato · 15-16 the warm seat ·
-  17 wind-up · 18-20 the race · 21-23 the colored page, final chord.
-Effects are cued to the composition's timeline (compositions/page1.html).
+Page 1 (0 – 55.8 s) is the approved sample's score: 100 bpm, F major, bars of
+2.4 s that follow the picture. Pages 2–5 continue it on the same instruments,
+each cue written in its page's local time (compositions/pageN.html) and placed
+at the page's start in index.html:
+  2 — the roll, the crash, the laughing, the memory waltz (D minor)
+  3 — the sad theme; "NO!" / "Get out!" stabs; the light goes out
+  4 — the storm: rain, thunder, the search, knocking, found in a corner
+  5 — the run, "I am late!", the hug, the flame relit, "his name is HOPE"
 
 Usage: python3 scripts/score.py
-       -> assets/audio/page1-score.wav, then ffmpeg loudnorm -> page1-score.m4a
+       -> assets/audio/score.wav, then ffmpeg loudnorm -> assets/audio/score.m4a
 """
 import subprocess
 import wave
@@ -18,7 +21,8 @@ from scipy import signal
 
 ROOT = Path(__file__).resolve().parent.parent
 SR = 48000
-TOTAL = 57.0
+TOTAL = 309.6
+PAGE = {1: 0.0, 2: 54.3, 3: 114.6, 4: 178.3, 5: 232.9}
 BEAT = 0.6
 BAR = 4 * BEAT
 rng = np.random.default_rng(2020)
@@ -362,7 +366,8 @@ add(sfx, whoosh(1.3, 250, 1200, rise=False), 47.7, 0.08)
 add(sfx, pop(700, 300), 48.2, 0.24)
 add(sfx, paper(0.6), 50.7, 0.14)
 add(sfx, whoosh(2.4, 900, 200, rise=True), 51.35, 0.08)
-add(sfx, scribble(1.3), 54.0, 0.18)
+
+exec((ROOT / "scripts" / "score_pages.py").read_text())
 
 # ------------------------------------------------------------------ mix
 n = int(SR * TOTAL)
@@ -383,12 +388,12 @@ stereo *= 0.89 / np.max(np.abs(stereo))
 
 out = ROOT / "assets" / "audio"
 out.mkdir(parents=True, exist_ok=True)
-with wave.open(str(out / "page1-score.wav"), "wb") as w:
+with wave.open(str(out / "score.wav"), "wb") as w:
     w.setnchannels(2)
     w.setsampwidth(2)
     w.setframerate(SR)
     w.writeframes((stereo * 32767).astype(np.int16).tobytes())
-subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(out / "page1-score.wav"),
-                "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-ar", "48000", "-c:a", "aac", "-b:a", "192k", str(out / "page1-score.m4a")], check=True)
-(out / "page1-score.wav").unlink()
-print("wrote", out / "page1-score.m4a", f"{TOTAL:.1f}s")
+subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(out / "score.wav"),
+                "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-ar", "48000", "-c:a", "aac", "-b:a", "192k", str(out / "score.m4a")], check=True)
+(out / "score.wav").unlink()
+print("wrote", out / "score.m4a", f"{TOTAL:.1f}s")

@@ -57,6 +57,12 @@ SWATCH = {
     "white": ("#ffffff", "#f4f1ea"),
     "tear": ("#d4eeff", "#9fd0f2"),
     "bolt": ("#fff4a0", "#ffcf3a"),
+    "rb1": ("#ff9d94", "#f2837a"),
+    "rb2": ("#ffc084", "#f7a866"),
+    "rb3": ("#ffe486", "#f7d060"),
+    "rb4": ("#b5e3a6", "#98d38a"),
+    "rb5": ("#a6d6f5", "#88c0ea"),
+    "rb6": ("#cdb3f0", "#b597e3"),
     "none": None,
 }
 

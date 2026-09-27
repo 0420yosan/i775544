@@ -23,8 +23,8 @@ window.EC = (function () {
     const n = document.createElement(tag);
     if (cls) n.className = cls;
     if (css) n.style.cssText = css;
-    // light pools, backdrops and the page sheet overhang their parents on purpose
-    if (cls && /\b(glow|abs|sheet|blank)\b/.test(cls)) n.setAttribute("data-layout-allow-overflow", "");
+    // light pools, backdrops, the page sheet and falling weather overhang their parents on purpose
+    if (cls && /\b(glow|abs|sheet|blank|drop|flake|splash|puff)\b/.test(cls)) n.setAttribute("data-layout-allow-overflow", "");
     if (parent) parent.appendChild(n);
     return n;
   }
